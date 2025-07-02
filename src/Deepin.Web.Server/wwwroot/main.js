@@ -38312,7 +38312,7 @@ var AppComponent = class _AppComponent {
     this.getForecasts();
   }
   getForecasts() {
-    this.http.get("/weatherforecast").subscribe((result) => {
+    this.http.get("/api/chats").subscribe((result) => {
       this.forecasts = result;
     }, (error) => {
       console.error(error);
