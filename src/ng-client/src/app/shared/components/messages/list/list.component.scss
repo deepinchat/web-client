@@ -1,0 +1,11 @@
+cdk-virtual-scroll-viewport {
+    height: 100%;
+}
+.loading-indicator {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    mat-spinner {
+        width: 32px;
+    }
+}

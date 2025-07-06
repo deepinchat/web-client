@@ -1,1 +1,29 @@
+// Custom Theming for Angular Material
+// For more information: https://material.angular.dev/guide/theming
+@use '@angular/material' as mat;
+
+html {
+  color-scheme: light dark;
+  @include mat.form-field-density(-5);
+  @include mat.theme((color: mat.$azure-palette,
+      typography: Roboto,
+      density: 0));
+}
+
 /* You can add global styles to this file, and also import other style files */
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+.thin-scrollbar {
+  scrollbar-width: thin;
+  transition: scrollbar-color 0.5s ease;
+  -webkit-overflow-scrolling: touch;
+}

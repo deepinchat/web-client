@@ -10,7 +10,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Deepin.Internal.SDK" Version="0.0.9-beta" />
+    <PackageReference Include="Deepin.Internal.SDK" Version="0.1.1-beta" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.OpenIdConnect" Version="9.0.5" />
     <PackageReference Include="Microsoft.AspNetCore.DataProtection.StackExchangeRedis" Version="9.0.5" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.NewtonsoftJson" Version="9.0.5" />
@@ -21,6 +21,7 @@
     <PackageReference Include="Microsoft.Graph" Version="5.80.0" />
     <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.22.1-Preview.1" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="8.1.4" />
+    <PackageReference Include="Yarp.ReverseProxy" Version="2.3.0" />
   </ItemGroup>
 
   <ItemGroup>

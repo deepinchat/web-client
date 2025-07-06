@@ -1,5 +1,6 @@
 using Deepin.Internal.SDK.Extensions;
 using Deepin.Web.Server.Services;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.HttpOverrides;
 
 namespace Deepin.Web.Server.Extensions;
@@ -11,7 +12,7 @@ public static class HostExtensions
     {
         builder.Services
         .AddDefaultUserContexts()
-        .AddDefaultDataProtection(builder.Configuration["RedisConnection"])
+        .AddDefaultDataProtection(builder.Configuration.GetConnectionString("Redis"))
         .AddDefaultAuthentication(builder.Configuration);
 
         builder.AddServiceDefaults();
@@ -25,6 +26,9 @@ public static class HostExtensions
         builder.Services.AddScoped<IChatService, ChatService>();
         builder.Services.AddScoped<IMessageService, MessageService>();
         builder.Services.AddScoped<IUserService, UserService>();
+        builder.Services.AddReverseProxy()
+            .AddTransforms<AccessTokenTransformProvider>()
+            .LoadFromConfig(builder.Configuration.GetSection("ReverseProxy"));
         return builder;
     }
 
@@ -67,6 +71,7 @@ public static class HostExtensions
             app.Environment.EnvironmentName
         });
         app.MapFallbackToFile("/index.html").RequireAuthorization();
+        app.MapReverseProxy();
         return app;
     }
 }

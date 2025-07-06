@@ -20,7 +20,7 @@ public class Message
     public Guid? ReplyToId { get; set; }
     public DateTimeOffset CreatedAt { get; set; }
     public DateTimeOffset UpdatedAt { get; set; }
-    public string? Text { get; set; }
+    public string? Content { get; set; }
     public string? Metadata { get; set; }
     public bool IsDeleted { get; set; }
     public bool IsRead { get; set; }

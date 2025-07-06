@@ -5,15 +5,11 @@ public enum ChatType
     Group,
     Direct
 }
-public class ChatListItem
+public class ChatSummary
 {
-    public Guid Id { get; set; }
-    public ChatType Type { get; set; }
-    public string Name { get; set; } = string.Empty;
-    public Guid? AvatarFileId { get; set; }
-    public bool IsPublic { get; set; }
-    public long UnreadCount { get; set; }
+    public Chat Chat { get; set; } = null!;
     public Message? LastMessage { get; set; }
+    public long UnreadCount { get; set; }
 }
 public class Chat
 {

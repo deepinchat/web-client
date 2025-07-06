@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
+import { LayoutService } from './core/services/layout.service';
 
 @Component({
   selector: 'app-root',
@@ -8,5 +9,7 @@ import { RouterOutlet } from '@angular/router';
   styleUrl: './app.scss'
 })
 export class App {
-  protected title = 'ng-client';
+  constructor(private layoutService: LayoutService) {
+    this.layoutService.changeTheme(this.layoutService.defaultTheme);
+  }
 }

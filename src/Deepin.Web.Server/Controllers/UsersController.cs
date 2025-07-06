@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Deepin.Web.Server.Controllers
 {
-    public class ProfileController(IUserContext userContext, IUserService userService) : ApiControllerBase
+    public class UsersController(IUserContext userContext, IUserService userService) : ApiControllerBase
     {
         [HttpGet("me")]
         public async Task<IActionResult> GetCurrentUser(CancellationToken cancellationToken)

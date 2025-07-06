@@ -6,48 +6,37 @@ namespace Deepin.Web.Server.Extensions;
 
 public static class ModelExtensions
 {
-    public static ChatListItem? ToChatListItemModel(this DirectChatDto chat, UserProfile? userProfile = null)
+    public static Chat ToModel(this DirectChatDto chat, UserProfile userProfile)
     {
-        if (userProfile is null)
-        {
-            return null;
-        }
-        return new ChatListItem
+        return new Chat
         {
             Id = chat.Id,
             Type = ChatType.Direct,
+            IsPublic = false,
+            CreatedAt = chat.CreatedAt,
+            UpdatedAt = chat.UpdatedAt,
+            CreatedBy = chat.CreatedBy,
             Name = userProfile.UserName ?? $"{userProfile.FirstName} {userProfile.LastName}",
             AvatarFileId = string.IsNullOrEmpty(userProfile.PictureId) ? null : Guid.Parse(userProfile.PictureId),
-            IsPublic = false
-        };
-    }
-    public static ChatListItem ToChatListItemModel(this GroupChatDto chat)
-    {
-        return new ChatListItem
-        {
-            Id = chat.Id,
-            Type = ChatType.Group,
-            Name = chat.Name,
-            AvatarFileId = chat.AvatarFileId,
-            IsPublic = chat.IsPublic
+            UserName = userProfile.UserName,
+            Description = userProfile.Bio
         };
     }
     public static Chat ToModel(this GroupChatDto chat)
     {
-        var model = new Chat
+        return new Chat
         {
             Id = chat.Id,
             Type = ChatType.Group,
-            CreatedBy = chat.CreatedBy,
+            Name = chat.Name,
+            AvatarFileId = chat.AvatarFileId,
+            IsPublic = chat.IsPublic,
             CreatedAt = chat.CreatedAt,
             UpdatedAt = chat.UpdatedAt,
-            Name = chat.Name,
+            CreatedBy = chat.CreatedBy,
             UserName = chat.UserName,
-            Description = chat.Description,
-            AvatarFileId = chat.AvatarFileId,
-            IsPublic = chat.IsPublic
+            Description = chat.Description
         };
-        return model;
     }
     public static UserProfile ToModel(this UserDto user)
     {
@@ -56,7 +45,8 @@ public static class ModelExtensions
             Id = user.Id,
             UserName = user.UserName,
             CreatedAt = user.CreatedAt,
-            UpdatedAt = user.UpdatedAt
+            UpdatedAt = user.UpdatedAt,
+            Email = user.Email
         };
         if (user.Claims is not null)
         {
@@ -91,6 +81,8 @@ public static class ModelExtensions
                 }
             }
         }
+        var displayName = profile.Name ?? profile.FirstName ?? user.UserName;
+        profile.Name = displayName;
         return profile;
     }
     public static Message ToModel(this MessageDto message, UserProfile? sender = null)
@@ -104,7 +96,7 @@ public static class ModelExtensions
             ReplyToId = message.ReplyToId,
             CreatedAt = message.CreatedAt,
             UpdatedAt = message.UpdatedAt,
-            Text = message.Text,
+            Content = message.Content,
             Metadata = message.Metadata,
             IsDeleted = message.IsDeleted,
             IsRead = message.IsRead,

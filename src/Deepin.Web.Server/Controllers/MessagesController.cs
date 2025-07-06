@@ -7,7 +7,7 @@ namespace Deepin.Web.Server.Controllers
     public class MessagesController(IMessageService messageService) : ApiControllerBase
     {
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetAsync(Guid id, CancellationToken cancellationToken = default)
+        public async Task<IActionResult> Get(Guid id, CancellationToken cancellationToken = default)
         {
             if (id == Guid.Empty)
             {
@@ -21,6 +21,17 @@ namespace Deepin.Web.Server.Controllers
             }
 
             return Ok(message);
+        }
+        [HttpPost]
+        public async Task<IActionResult> CreateAsync([FromBody] MessageRequest request, CancellationToken cancellationToken = default)
+        {
+
+            var createdMessage = await messageService.SendAsync(request, cancellationToken);
+            if (createdMessage is null)
+            {
+                return BadRequest("Failed to create message.");
+            }
+            return CreatedAtAction(nameof(Get), new { id = createdMessage.Id }, createdMessage);
         }
         [HttpGet]
         public async Task<IActionResult> GetPagedAsync([FromQuery] SearchMessagesRequest request, CancellationToken cancellationToken = default)
