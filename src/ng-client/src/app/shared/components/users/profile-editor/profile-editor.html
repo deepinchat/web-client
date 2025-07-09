@@ -1,0 +1,54 @@
+@if (profile && form) {
+<form [formGroup]="form">
+    <div class="user-avatar">
+        <user-avatar [profile]="profile"></user-avatar>
+        <deepin-file-uploader (fileUploaded)="onAvatarUploaded($event)" [multiple]="false"
+            [accept]="'image/*'"></deepin-file-uploader>
+    </div>
+    <mat-form-field appearance="outline">
+        <mat-label>First Name</mat-label>
+        <input matInput formControlName="firstName">
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+        <mat-label>Last Name</mat-label>
+        <input matInput formControlName="lastName">
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+        <mat-label>Display Name</mat-label>
+        <input matInput formControlName="name">
+        @if (formControlErrors('name')?.['required']) {
+        <mat-error>Display Name cannot be null.</mat-error>
+        }
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+        <mat-label>BirthDate</mat-label>
+        <input matInput [matDatepicker]="picker" formControlName="birthDate">
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+        <mat-label>Location</mat-label>
+        <input matInput formControlName="location">
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+        <mat-label>TimeZone</mat-label>
+        <mat-select formControlName="zoneInfo">
+            @for (timeZone of timeZones; track timeZone) {
+            <mat-option [value]="timeZone.value">{{timeZone.name}}</mat-option>
+            }
+        </mat-select>
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+        <mat-label>Locale</mat-label>
+        <mat-select formControlName="locale">
+            @for (locale of locales; track locale) {
+            <mat-option [value]="locale.value">{{locale.name}}</mat-option>
+            }
+        </mat-select>
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+        <mat-label>Description</mat-label>
+        <textarea matInput formControlName="bio"></textarea>
+    </mat-form-field>
+</form>
+}

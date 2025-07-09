@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { UserProfile } from '../models/user.model';
+import { UserProfile, UserProfileRequest } from '../models/user.model';
 import { BehaviorSubject, map } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 
@@ -7,7 +7,7 @@ import { HttpClient } from '@angular/common/http';
   providedIn: 'root'
 })
 export class UserService {
-  private _user: BehaviorSubject<UserProfile | null> = new BehaviorSubject<UserProfile | null>(null);
+  private _user: BehaviorSubject<UserProfile | undefined> = new BehaviorSubject<UserProfile | undefined>(undefined);
   public readonly user = this._user.asObservable();
 
   constructor(private httpClient: HttpClient) { }
@@ -26,7 +26,15 @@ export class UserService {
       }));
   }
 
-  getUserById(id: string) {
+  getProfileById(id: string) {
     return this.httpClient.get<UserProfile>(`/api/users/${id}`);
+  }
+
+  updateProfile(request: UserProfileRequest) {
+    return this.httpClient.put<UserProfile>('/api/users/me', request)
+      .pipe(map(res => {
+        this._user.next(res);
+        return res;
+      }));
   }
 }

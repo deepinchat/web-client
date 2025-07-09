@@ -21,10 +21,8 @@ const COLORS = [
   styleUrl: './avatar.component.scss'
 })
 export class AvatarComponent implements OnInit, OnChanges {
-  @Input() fileId: string | null = null;
-  @Input() firstName: string = '';
-  @Input() lastName: string = '';
-  @Input() displayName: string = '';
+  @Input() fileId?: string | null = null;
+  @Input() displayName?: string = '';
   @Input() size: 'small' | 'default' | 'large' = 'default';
   @Input() shape: 'circle' | 'rounded' | 'square' = 'circle';
   backgroundColor: string = '';
@@ -53,31 +51,20 @@ export class AvatarComponent implements OnInit, OnChanges {
 
   private updateInitials(): void {
     let initials = '';
-
-    if (this.firstName) {
-      initials += this.firstName.charAt(0);
-    }
-
-    if (this.lastName) {
-      initials += this.lastName.charAt(0);
-    }
-
-    if (!initials) {
+    if (!initials && this.displayName) {
       initials = this.displayName.charAt(0);
     }
 
     this.initials = initials || '?';
   }
   private updateBackgroundColor(): void {
-    let name = (this.firstName + this.lastName) || this.displayName;
-
-    if (!name) {
+    if (!this.displayName) {
       this.backgroundColor = COLORS[0];
       return;
     }
     let sum = 0;
-    for (let i = 0; i < name.length; i++) {
-      sum += name.charCodeAt(i);
+    for (let i = 0; i < this.displayName.length; i++) {
+      sum += this.displayName.charCodeAt(i);
     }
 
     const colorIndex = sum % COLORS.length;

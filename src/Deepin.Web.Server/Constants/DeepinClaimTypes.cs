@@ -10,4 +10,5 @@ public static class DeepinClaimTypes
     public const string Locale = "locale";
     public const string BirthDate = "birthdate";
     public const string Bio = "bio";
+    public const string Location = "location";
 }

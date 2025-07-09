@@ -13,6 +13,7 @@ namespace Deepin.Web.Server.Controllers
             var chats = await chatService.GetAllChatsAsync(cancellationToken);
             return Ok(chats);
         }
+
         [HttpGet("group/{id}")]
         public async Task<ActionResult<Chat>> GetGroupChat(Guid id, CancellationToken cancellationToken = default)
         {
@@ -34,6 +35,7 @@ namespace Deepin.Web.Server.Controllers
             }
             return CreatedAtAction(nameof(GetGroupChat), new { id = chat.Id }, chat);
         }
+
         [HttpGet("direct/{id}")]
         public async Task<ActionResult<Chat>> GetDirectChat(Guid id, CancellationToken cancellationToken = default)
         {
@@ -44,6 +46,7 @@ namespace Deepin.Web.Server.Controllers
             }
             return Ok(chat);
         }
+
         [HttpGet("search")]
         public async Task<ActionResult<Chat>> Search([FromQuery] SearchChatRequest request, CancellationToken cancellationToken = default)
         {

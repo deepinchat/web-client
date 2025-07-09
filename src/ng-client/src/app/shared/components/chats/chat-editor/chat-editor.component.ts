@@ -41,7 +41,6 @@ export class ChatEditorComponent {
   isLoading = false;
   isNew = true;
   constructor(
-    @Inject(DOCUMENT) private document: Document,
     @Inject(MAT_DIALOG_DATA) public data: { type: ChatType, chat?: Chat },
     private snackBar: MatSnackBar,
     private fb: FormBuilder,

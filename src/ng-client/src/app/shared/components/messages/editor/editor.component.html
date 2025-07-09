@@ -26,7 +26,7 @@
     <mat-form-field appearance="outline">
         <mat-label>Message</mat-label>
         <textarea rows="3" formControlName="content" matInput placeholder="Typing messages here"></textarea>
-        <button class="form-submit" type="submit" mat-mini-fab [disabled]="form.invalid || isLoading" matSuffix
+        <button class="form-submit" type="submit" mat-mini-fab [disabled]="!isValid" matSuffix
             mat-icon-button>
             @if (isLoading) {
             <mat-spinner diameter="20" />

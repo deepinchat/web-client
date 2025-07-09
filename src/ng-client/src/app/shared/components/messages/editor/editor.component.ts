@@ -53,9 +53,16 @@ export class MessageEditorComponent implements OnInit {
     this.form = this.fb.group({
       type: this.fb.control('text'),
       chatId: this.fb.control(this.chatId),
-      content: this.fb.control('', [Validators.required, Validators.maxLength(1024 * 100)]),
+      content: this.fb.control('', [Validators.maxLength(1024 * 100)]),
       attachments: this.fb.array([]),
     });
+  }
+
+  get isValid() {
+    return this.form && this.form.valid && (
+      this.form.get('content')?.value.trim() || 
+      (this.form.get('attachments') as FormArray).length > 0
+    );
   }
 
   enterForm(event: any) {

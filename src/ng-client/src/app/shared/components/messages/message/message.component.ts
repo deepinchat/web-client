@@ -1,13 +1,13 @@
 import { Component, Input } from '@angular/core';
-import { AvatarComponent } from '../../avatar/avatar.component';
 import { Message } from '../../../../core/models/message.model';
 import { FormatTimePipe } from '../../../pipes/format-time.pipe';
 import { MessageAttachmentComponent } from '../attachment/attachment.component';
+import { UserAvatar } from '../../users/avatar/avatar';
 
 @Component({
   selector: 'deepin-message',
   imports: [
-    AvatarComponent,
+    UserAvatar,
     FormatTimePipe,
     MessageAttachmentComponent
   ],

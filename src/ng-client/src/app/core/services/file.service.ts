@@ -25,6 +25,11 @@ export class FileService {
     return this.httpClient.post<FileModel>(`/api/files`, formData);
   }
 
+  batchUpload(files: File[], container?: string): Promise<FileModel[]> {
+    const tasks = files.map(file => firstValueFrom(this.upload(file, container)));
+    return Promise.all(tasks);
+  }
+
   download(id: string) {
     return this.httpClient.get(`/api/files/${id}/download`, {
       responseType: 'blob'

@@ -38,6 +38,47 @@ public static class ModelExtensions
             Description = chat.Description
         };
     }
+    public static IEnumerable<UserCliamRequest> ToClaims(this UserProfileRequest request)
+    {
+        var claims = new List<UserCliamRequest>();
+        if (!string.IsNullOrEmpty(request.FirstName))
+        {
+            claims.Add(new UserCliamRequest(DeepinClaimTypes.FirstName, request.FirstName));
+        }
+        if (!string.IsNullOrEmpty(request.LastName))
+        {
+            claims.Add(new UserCliamRequest(DeepinClaimTypes.LastName, request.LastName));
+        }
+        if (!string.IsNullOrEmpty(request.Name))
+        {
+            claims.Add(new UserCliamRequest(DeepinClaimTypes.Name, request.Name));
+        }
+        if (!string.IsNullOrEmpty(request.PictureId))
+        {
+            claims.Add(new UserCliamRequest(DeepinClaimTypes.Picture, request.PictureId));
+        }
+        if (!string.IsNullOrEmpty(request.BirthDate))
+        {
+            claims.Add(new UserCliamRequest(DeepinClaimTypes.BirthDate, request.BirthDate));
+        }
+        if (!string.IsNullOrEmpty(request.ZoneInfo))
+        {
+            claims.Add(new UserCliamRequest(DeepinClaimTypes.ZoneInfo, request.ZoneInfo));
+        }
+        if (!string.IsNullOrEmpty(request.Locale))
+        {
+            claims.Add(new UserCliamRequest(DeepinClaimTypes.Locale, request.Locale));
+        }
+        if (!string.IsNullOrEmpty(request.Bio))
+        {
+            claims.Add(new UserCliamRequest("bio", request.Bio));
+        }
+        if (!string.IsNullOrEmpty(request.Location))
+        {
+            claims.Add(new UserCliamRequest(DeepinClaimTypes.Location, request.Location));
+        }
+        return claims;
+    }
     public static UserProfile ToModel(this UserDto user)
     {
         var profile = new UserProfile
@@ -75,14 +116,15 @@ public static class ModelExtensions
                     case DeepinClaimTypes.Locale:
                         profile.Locale = claim.ClaimValue;
                         break;
+                    case DeepinClaimTypes.Location:
+                        profile.Location = claim.ClaimValue;
+                        break;
                     case "bio":
                         profile.Bio = claim.ClaimValue;
                         break;
                 }
             }
         }
-        var displayName = profile.Name ?? profile.FirstName ?? user.UserName;
-        profile.Name = displayName;
         return profile;
     }
     public static Message ToModel(this MessageDto message, UserProfile? sender = null)

@@ -2,8 +2,8 @@
     <a mat-icon-button routerLink="/home" routerLinkActive="active">
         <mat-icon>home</mat-icon>
     </a>
-    <a mat-icon-button routerLink="/public" routerLinkActive="active">
-        <mat-icon>explore</mat-icon>
+    <a mat-icon-button routerLink="/search" routerLinkActive="active">
+        <mat-icon>search</mat-icon>
     </a>
     <a mat-icon-button routerLink="/chats" routerLinkActive="active">
         <mat-icon>chat</mat-icon>
@@ -16,23 +16,19 @@
     </a>
 </div>
 <div class="sidebar">
-    <mat-menu #addMenu="matMenu" yPosition="above" xPosition="before">
-        <button mat-menu-item>
-            <mat-icon>person_add</mat-icon>
-            <span>Add Frends</span>
-        </button>
-        <button mat-menu-item (click)="createGroup()">
-            <mat-icon>group_add</mat-icon>
-            <span>Create Group</span>
-        </button>
-        <button mat-menu-item (click)="createChannel()">
-            <mat-icon>campaign</mat-icon>
-            <span>Create Channel</span>
-        </button>
-    </mat-menu>
     <button mat-icon-button [matMenuTriggerFor]="addMenu">
         <mat-icon matListItemIcon>add</mat-icon>
     </button>
+
+    @if(profile) {
+    <button mat-icon-button class="profile-button" (click)="openProfileEditor()">
+        <user-avatar [profile]="profile" size="small"></user-avatar>
+    </button>
+    } @else {
+    <button mat-icon-button>
+        <mat-icon>account_circle</mat-icon>
+    </button>
+    }
     <button mat-icon-button (click)="toggleTheme()">
         <mat-icon>
             {{ theme == 'light' ? 'dark_mode' : 'light_mode' }}
@@ -42,3 +38,27 @@
         <mat-icon>settings</mat-icon>
     </a>
 </div>
+<mat-menu #addMenu="matMenu" yPosition="above" xPosition="before">
+    <button mat-menu-item>
+        <mat-icon>person_add</mat-icon>
+        <span>Add Frends</span>
+    </button>
+    <button mat-menu-item (click)="createGroup()">
+        <mat-icon>group_add</mat-icon>
+        <span>Create Group</span>
+    </button>
+    <button mat-menu-item (click)="createChannel()">
+        <mat-icon>campaign</mat-icon>
+        <span>Create Channel</span>
+    </button>
+</mat-menu>
+<mat-menu #profileMenu="matMenu" yPosition="above" xPosition="before">
+    <button mat-menu-item (click)="openProfileEditor()">
+        <mat-icon>person_add</mat-icon>
+        <span>View Profile</span>
+    </button>
+    <button mat-menu-item (click)="openProfileEditor()">
+        <mat-icon>person_add</mat-icon>
+        <span>Edit Profile</span>
+    </button>
+</mat-menu>

@@ -1,0 +1,18 @@
+<h2 mat-dialog-title>
+    Edit profile
+</h2>
+<mat-dialog-content>
+    <profile-editor #profileEditor></profile-editor>
+</mat-dialog-content>
+<mat-dialog-actions>
+    <button type="button" [disabled]="profileEditor.isLoading" mat-button (click)="onCancel()">Cancel</button>
+    <button type="button" [disabled]="profileEditor.isLoading || profileEditor.form?.invalid" mat-flat-button
+        (click)="onSubmit()">
+        @if (profileEditor.isLoading) {
+        <mat-icon>
+            <mat-spinner diameter="16"></mat-spinner>
+        </mat-icon>
+        }
+        Save
+    </button>
+</mat-dialog-actions>

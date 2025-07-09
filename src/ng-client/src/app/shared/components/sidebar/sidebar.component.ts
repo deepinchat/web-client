@@ -7,6 +7,11 @@ import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { ChatEditorComponent } from '../chats/chat-editor/chat-editor.component';
 import { ThemeType, LayoutService } from '../../../core/services/layout.service';
 import { MatButtonModule } from '@angular/material/button';
+import { ProfileEditor } from '../users/profile-editor/profile-editor';
+import { ProfileEditorDialog } from '../users/profile-editor-dialog/profile-editor-dialog';
+import { UserAvatar } from "../users/avatar/avatar";
+import { UserService } from '../../../core/services/user.service';
+import { UserProfile } from '../../../core/models/user.model';
 
 @Component({
   selector: 'deepin-sidebar',
@@ -19,20 +24,26 @@ import { MatButtonModule } from '@angular/material/button';
     MatMenuItem,
     MatMenuTrigger,
     MatDialogModule,
-    MatButtonModule
+    MatButtonModule,
+    UserAvatar
   ],
   templateUrl: './sidebar.component.html',
   styleUrl: './sidebar.component.scss'
 })
 export class SidebarComponent {
   theme: ThemeType;
+  profile?: UserProfile;
   constructor(
     private dialog: MatDialog,
     private layoutService: LayoutService,
+    private userService: UserService
   ) {
     this.theme = this.layoutService.defaultTheme;
     this.layoutService.theme.subscribe(res => {
       this.theme = res;
+    });
+    this.userService.user.subscribe(user => {
+      this.profile = user;
     });
   }
 
@@ -52,6 +63,13 @@ export class SidebarComponent {
   createChannel() {
     this.dialog.open(ChatEditorComponent, {
       data: { type: 'channel' },
+      minWidth: 400,
+      height: 'auto'
+    });
+  }
+
+  openProfileEditor() {
+    this.dialog.open(ProfileEditorDialog, {
       minWidth: 400,
       height: 'auto'
     });

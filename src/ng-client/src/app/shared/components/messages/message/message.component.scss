@@ -60,14 +60,13 @@
 
     &-attachments {
         display: flex;
-        gap: 1rem;
-        margin-top: 1rem;
+        flex-flow: wrap;
+        gap: .5rem;
     }
 
     &-attachment {
         display: flex;
         flex-direction: column;
-        gap: .5rem;
-        max-width: 320px;
+        max-width: calc(25% - .5rem);
     }
 }

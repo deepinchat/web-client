@@ -1,6 +1,6 @@
 @if (message) {
 <div class="message" [class.message-my]="message.isMyMessage" [class.message-other]="!message.isMyMessage">
-    <deepin-avatar [fileId]="message.sender.avatarFileId"></deepin-avatar>
+    <user-avatar [profile]="message.sender"></user-avatar>
     <div class="message-container">
         <div class="message-sender">
             <span>

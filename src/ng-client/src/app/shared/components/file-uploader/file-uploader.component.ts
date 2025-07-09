@@ -52,15 +52,16 @@ export class FileUploaderComponent implements OnInit, OnDestroy {
       input.style.display = 'none';
       input.multiple = this.multiple;
       input.accept = this.accept;
-      input.onchange = () => {
-        const files = input.files;
-        if (files && files.length > 0) {
-          this.fileService.upload(files[0])
-            .subscribe({
-              next: (file) => {
-                this.fileUploaded.emit([file]);
-              },
-            })
+      input.onchange = async () => {
+        const fileList: FileList = input.files;
+        if (fileList && fileList.length > 0) {
+          const files: File[] = Array.from(fileList);
+          try {
+            const uploadedFiles = await this.fileService.batchUpload(files);
+            this.fileUploaded.emit(uploadedFiles);
+          } catch (error) {
+            console.error('File upload failed:', error);
+          }
         }
       }
       this.document.body.append(input);
