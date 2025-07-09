@@ -1,4 +1,5 @@
 using Deepin.Internal.SDK.Clients;
+using Deepin.Internal.SDK.Models;
 using Deepin.Web.Server.Extensions;
 using Deepin.Web.Server.Models;
 
@@ -8,6 +9,7 @@ public interface IUserService
 {
     Task<UserProfile?> GetProfileAsync(Guid userId, CancellationToken cancellationToken = default);
     Task<UserProfile?> UpdateProfileAsync(Guid userId, UserProfileRequest request, CancellationToken cancellationToken = default);
+    Task<IPagedResult<UserProfile>> SearchUsersAsync(SearchUsersRequest request, CancellationToken cancellationToken = default);
 }
 
 public class UserService(IDeepinApiClient deepinApiClient) : IUserService
@@ -36,5 +38,20 @@ public class UserService(IDeepinApiClient deepinApiClient) : IUserService
 
         var updatedUser = await deepinApiClient.Users.UpdateUserClaimsAsync(userId, request.ToClaims(), cancellationToken);
         return updatedUser?.ToModel();
+    }
+    public async Task<IPagedResult<UserProfile>> SearchUsersAsync(SearchUsersRequest request, CancellationToken cancellationToken = default)
+    {
+        if (request == null)
+        {
+            throw new ArgumentNullException(nameof(request), "Search request cannot be null.");
+        }
+
+        var users = await deepinApiClient.Users.SearchUsersAsync(request, cancellationToken);
+        if (users == null)
+        {
+            return new PagedResult<UserProfile>([], request.Offset, request.Limit, 0);
+        }
+        var items = users.Items.Select(u => u.ToModel()).ToArray();
+        return new PagedResult<UserProfile>(items, request.Offset, request.Limit, users.TotalCount);
     }
 }

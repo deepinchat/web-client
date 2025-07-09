@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
-import { UserProfile, UserProfileRequest } from '../models/user.model';
+import { UserProfile, UserProfileRequest, UserSearchRequest } from '../models/user.model';
 import { BehaviorSubject, map } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
+import { PagedResult } from '../models/pagination.model';
 
 @Injectable({
   providedIn: 'root'
@@ -36,5 +37,15 @@ export class UserService {
         this._user.next(res);
         return res;
       }));
+  }
+
+  search(request: UserSearchRequest) {
+    return this.httpClient.get<PagedResult<UserProfile>>('/api/users/search', {
+      params: {
+        search: request.search || '',
+        limit: request.limit,
+        offset: request.offset
+      }
+    });
   }
 }

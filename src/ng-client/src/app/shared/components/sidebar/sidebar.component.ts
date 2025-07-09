@@ -12,6 +12,8 @@ import { ProfileEditorDialog } from '../users/profile-editor-dialog/profile-edit
 import { UserAvatar } from "../users/avatar/avatar";
 import { UserService } from '../../../core/services/user.service';
 import { UserProfile } from '../../../core/models/user.model';
+import { FileUrlPipe } from '../../pipes/file-url.pipe';
+import { AsyncPipe } from '@angular/common';
 
 @Component({
   selector: 'deepin-sidebar',
@@ -25,7 +27,8 @@ import { UserProfile } from '../../../core/models/user.model';
     MatMenuTrigger,
     MatDialogModule,
     MatButtonModule,
-    UserAvatar
+    AsyncPipe,
+    FileUrlPipe
   ],
   templateUrl: './sidebar.component.html',
   styleUrl: './sidebar.component.scss'

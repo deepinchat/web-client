@@ -1,3 +1,5 @@
+import { PagedQuery } from "./pagination.model";
+
 export interface UserProfileRequest {
     name?: string;
     firstName?: string;
@@ -12,7 +14,7 @@ export interface UserProfileRequest {
 
 export interface UserProfile extends UserProfileRequest {
     id: string;
-    username?: string;
+    userName?: string;
     email?: string;
     phoneNumber?: string;
     createdAt: string;
@@ -27,3 +29,7 @@ export interface UserPresence {
     customStatusExpiresAt?: Date;
 }
 export type PresenceStatus = 'online' | 'offline' | 'away' | 'busy' | 'doNotDisturb' | 'custom';
+
+export interface UserSearchRequest extends PagedQuery {
+
+}

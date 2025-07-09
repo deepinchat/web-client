@@ -89,7 +89,6 @@ export interface Message {
     isEdited: boolean;
     isRead: boolean;
     isPinned: boolean;
-    isMyMessage: boolean;
     sender: UserProfile;
     attachments?: MessageAttachment[];
     mentions?: MessageMention[];

@@ -21,8 +21,12 @@
     </button>
 
     @if(profile) {
-    <button mat-icon-button class="profile-button" (click)="openProfileEditor()">
-        <user-avatar [profile]="profile" size="small"></user-avatar>
+    <button mat-icon-button (click)="openProfileEditor()">
+        @if(profile.pictureId){
+        <img [src]="profile.pictureId | fileUrl | async" alt="Profile Picture" class="profile-picture">
+        }@else {
+        <mat-icon>account_circle</mat-icon>
+        }
     </button>
     } @else {
     <button mat-icon-button>

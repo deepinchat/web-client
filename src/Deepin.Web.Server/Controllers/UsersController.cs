@@ -1,3 +1,4 @@
+using Deepin.Internal.SDK.Models;
 using Deepin.Web.Server.Models;
 using Deepin.Web.Server.Services;
 using Microsoft.AspNetCore.Mvc;
@@ -42,5 +43,16 @@ namespace Deepin.Web.Server.Controllers
             }
             return Ok(userProfile);
         }
+        [HttpGet("search")]
+        public async Task<IActionResult> SearchUsers([FromQuery] SearchUsersRequest request, CancellationToken cancellationToken)
+        {
+            if (request == null)
+            {
+                return BadRequest("Search request cannot be null.");
+            }
+            var result = await userService.SearchUsersAsync(request, cancellationToken);
+            return Ok(result);
+        }
+
     }
 }

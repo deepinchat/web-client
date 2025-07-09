@@ -1,6 +1,7 @@
 export interface PagedQuery {
     offset: number;
     limit: number;
+    search?: string;
 }
 
 export class PagedResult<T> {

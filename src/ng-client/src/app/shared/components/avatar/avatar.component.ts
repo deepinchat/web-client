@@ -1,6 +1,5 @@
 import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { FileService } from '../../../core/services/file.service';
-import { map } from 'rxjs';
 
 const COLORS = [
   '#FF6767',
@@ -72,12 +71,11 @@ export class AvatarComponent implements OnInit, OnChanges {
   }
 
   loadImage(id: string) {
-    this.fileService.download(id)
-      .pipe(map((file) => {
-        return URL.createObjectURL(file);
-      }))
-      .subscribe(objectUrl => {
-        this.imageUrl = objectUrl;
-      });
+    this.fileService.getLocalDownloadUrl(id).then(url => {
+      this.imageUrl = url || '';
+    }).catch(error => {
+      console.error('Error loading image:', error);
+      this.imageUrl = ''; // Reset image URL on error
+    });
   }
 }

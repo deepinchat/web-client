@@ -1,17 +1,51 @@
 import {
+  CdkConnectedOverlay,
+  CdkOverlayOrigin,
+  ChatEditorComponent,
+  ChatHubService,
+  FileUploaderComponent,
+  FlexibleConnectedPositionStrategy,
+  MatButton,
+  MatButtonModule,
+  MatDialog,
+  MatDialogActions,
+  MatDialogContent,
+  MatDialogModule,
+  MatDialogRef,
+  MatDialogTitle,
+  MatIconButton,
+  MatMenu,
+  MatMenuItem,
+  MatMenuTrigger,
+  MatSnackBar,
+  OverlayConfig,
+  OverlayModule,
+  createBlockScrollStrategy,
+  createFlexibleConnectedPositionStrategy,
+  createGlobalPositionStrategy,
+  createOverlayRef,
+  createRepositionScrollStrategy
+} from "./chunk-K6MCXCXV.js";
+import {
+  RouterLink,
+  RouterLinkActive,
+  RouterOutlet,
+  provideRouter
+} from "./chunk-LCSMVFIT.js";
+import {
+  FileUrlPipe,
+  UserService
+} from "./chunk-D764HGAI.js";
+import {
   A,
   A11yModule,
   ActiveDescendantKeyManager,
   BACKSPACE,
-  CdkConnectedOverlay,
   CdkMonitorFocus,
-  CdkOverlayOrigin,
   CdkPortalOutlet,
   CdkScrollable,
   CdkScrollableModule,
   CdkTrapFocus,
-  ChatEditorComponent,
-  ChatHubService,
   ComponentPortal,
   ControlContainer,
   DOWN_ARROW,
@@ -21,8 +55,6 @@ import {
   ENTER,
   ESCAPE,
   ErrorStateMatcher,
-  FileUploaderComponent,
-  FlexibleConnectedPositionStrategy,
   FocusMonitor,
   FocusTrapFactory,
   FormBuilder,
@@ -34,36 +66,23 @@ import {
   LiveAnnouncer,
   MAT_FORM_FIELD,
   MAT_INPUT_VALUE_ACCESSOR,
-  MatButton,
-  MatButtonModule,
   MatCommonModule,
-  MatDialog,
-  MatDialogActions,
-  MatDialogContent,
-  MatDialogModule,
-  MatDialogRef,
-  MatDialogTitle,
   MatDivider,
   MatError,
   MatFormField,
   MatFormFieldControl,
   MatFormFieldModule,
   MatIcon,
-  MatIconButton,
   MatInput,
   MatInputModule,
   MatLabel,
   MatListItemIcon,
   MatListModule,
-  MatMenu,
-  MatMenuItem,
-  MatMenuTrigger,
   MatProgressSpinner,
   MatPseudoCheckbox,
   MatPseudoCheckboxModule,
   MatRipple,
   MatRippleModule,
-  MatSnackBar,
   MatSuffix,
   NG_VALIDATORS,
   NG_VALUE_ACCESSOR,
@@ -71,8 +90,6 @@ import {
   NgControlStatus,
   NgControlStatusGroup,
   NgForm,
-  OverlayConfig,
-  OverlayModule,
   PAGE_DOWN,
   PAGE_UP,
   Platform,
@@ -98,26 +115,12 @@ import {
   coerceBooleanProperty,
   coerceNumberProperty,
   coerceStringArray,
-  createBlockScrollStrategy,
-  createFlexibleConnectedPositionStrategy,
-  createGlobalPositionStrategy,
-  createOverlayRef,
-  createRepositionScrollStrategy,
   hasModifierKey,
   removeAriaReferencedId,
   ɵNgNoValidate
-} from "./chunk-YTIHTV7L.js";
+} from "./chunk-2O4QMEWM.js";
 import {
-  HttpClient,
-  NgClass,
-  RouterLink,
-  RouterLinkActive,
-  RouterOutlet,
-  bootstrapApplication,
-  provideHttpClient,
-  provideRouter
-} from "./chunk-PMNF5HRY.js";
-import {
+  AsyncPipe,
   BehaviorSubject,
   ChangeDetectionStrategy,
   ChangeDetectorRef,
@@ -135,6 +138,7 @@ import {
   Injector,
   Input,
   LOCALE_ID,
+  NgClass,
   NgModule,
   NgZone,
   Optional,
@@ -153,6 +157,7 @@ import {
   __spreadValues,
   afterNextRender,
   booleanAttribute,
+  bootstrapApplication,
   debounceTime,
   defer,
   filter,
@@ -166,6 +171,7 @@ import {
   numberAttribute,
   of,
   provideBrowserGlobalErrorListeners,
+  provideHttpClient,
   provideZoneChangeDetection,
   setClassMetadata,
   signal,
@@ -204,6 +210,8 @@ import {
   ɵɵnamespaceHTML,
   ɵɵnamespaceSVG,
   ɵɵnextContext,
+  ɵɵpipe,
+  ɵɵpipeBind1,
   ɵɵprojection,
   ɵɵprojectionDef,
   ɵɵproperty,
@@ -214,6 +222,7 @@ import {
   ɵɵrepeaterTrackByIdentity,
   ɵɵresetView,
   ɵɵrestoreView,
+  ɵɵsanitizeUrl,
   ɵɵstyleProp,
   ɵɵtemplate,
   ɵɵtext,
@@ -224,7 +233,7 @@ import {
   ɵɵtwoWayListener,
   ɵɵtwoWayProperty,
   ɵɵviewQuery
-} from "./chunk-K4QZ3SLG.js";
+} from "./chunk-WAVD63B2.js";
 
 // node_modules/@angular/material/fesm2022/sidenav.mjs
 var _c0 = ["*"];
@@ -9973,48 +9982,6 @@ function provideNativeDateAdapter(formats = MAT_NATIVE_DATE_FORMATS) {
   }];
 }
 
-// src/app/core/services/user.service.ts
-var UserService = class _UserService {
-  httpClient;
-  _user = new BehaviorSubject(void 0);
-  user = this._user.asObservable();
-  constructor(httpClient) {
-    this.httpClient = httpClient;
-  }
-  init() {
-    this.getMyProfile().subscribe((res) => {
-      this._user.next(res);
-    });
-  }
-  getMyProfile() {
-    return this.httpClient.get("/api/users/me").pipe(map((res) => {
-      this._user.next(res);
-      return res;
-    }));
-  }
-  getProfileById(id) {
-    return this.httpClient.get(`/api/users/${id}`);
-  }
-  updateProfile(request) {
-    return this.httpClient.put("/api/users/me", request).pipe(map((res) => {
-      this._user.next(res);
-      return res;
-    }));
-  }
-  static \u0275fac = function UserService_Factory(__ngFactoryType__) {
-    return new (__ngFactoryType__ || _UserService)(\u0275\u0275inject(HttpClient));
-  };
-  static \u0275prov = /* @__PURE__ */ \u0275\u0275defineInjectable({ token: _UserService, factory: _UserService.\u0275fac, providedIn: "root" });
-};
-(() => {
-  (typeof ngDevMode === "undefined" || ngDevMode) && setClassMetadata(UserService, [{
-    type: Injectable,
-    args: [{
-      providedIn: "root"
-    }]
-  }], () => [{ type: HttpClient }], null);
-})();
-
 // src/app/shared/components/users/profile-editor/profile-editor.ts
 function ProfileEditor_Conditional_0_Conditional_16_Template(rf, ctx) {
   if (rf & 1) {
@@ -10106,16 +10073,16 @@ function ProfileEditor_Conditional_0_Template(rf, ctx) {
     \u0275\u0275elementEnd()();
   }
   if (rf & 2) {
-    let tmp_6_0;
+    let tmp_7_0;
     const picker_r5 = \u0275\u0275reference(23);
     const ctx_r1 = \u0275\u0275nextContext();
     \u0275\u0275property("formGroup", ctx_r1.form);
     \u0275\u0275advance(2);
-    \u0275\u0275property("profile", ctx_r1.profile);
+    \u0275\u0275property("size", "large")("profile", ctx_r1.profile);
     \u0275\u0275advance();
     \u0275\u0275property("multiple", false)("accept", "image/*");
     \u0275\u0275advance(13);
-    \u0275\u0275conditional(((tmp_6_0 = ctx_r1.formControlErrors("name")) == null ? null : tmp_6_0["required"]) ? 16 : -1);
+    \u0275\u0275conditional(((tmp_7_0 = ctx_r1.formControlErrors("name")) == null ? null : tmp_7_0["required"]) ? 16 : -1);
     \u0275\u0275advance(4);
     \u0275\u0275property("matDatepicker", picker_r5);
     \u0275\u0275advance();
@@ -10228,9 +10195,9 @@ var ProfileEditor = class _ProfileEditor {
   static \u0275fac = function ProfileEditor_Factory(__ngFactoryType__) {
     return new (__ngFactoryType__ || _ProfileEditor)(\u0275\u0275directiveInject(FormBuilder), \u0275\u0275directiveInject(UserService));
   };
-  static \u0275cmp = /* @__PURE__ */ \u0275\u0275defineComponent({ type: _ProfileEditor, selectors: [["profile-editor"]], features: [\u0275\u0275ProvidersFeature([provideNativeDateAdapter()])], decls: 1, vars: 1, consts: [["picker", ""], [3, "formGroup"], [1, "user-avatar"], [3, "profile"], [3, "fileUploaded", "multiple", "accept"], ["appearance", "outline"], ["matInput", "", "formControlName", "firstName"], ["matInput", "", "formControlName", "lastName"], ["matInput", "", "formControlName", "name"], ["matInput", "", "formControlName", "birthDate", 3, "matDatepicker"], ["matSuffix", "", 3, "for"], ["matInput", "", "formControlName", "location"], ["formControlName", "zoneInfo"], [3, "value"], ["formControlName", "locale"], ["matInput", "", "formControlName", "bio"]], template: function ProfileEditor_Template(rf, ctx) {
+  static \u0275cmp = /* @__PURE__ */ \u0275\u0275defineComponent({ type: _ProfileEditor, selectors: [["profile-editor"]], features: [\u0275\u0275ProvidersFeature([provideNativeDateAdapter()])], decls: 1, vars: 1, consts: [["picker", ""], [3, "formGroup"], [1, "user-avatar"], [3, "size", "profile"], [3, "fileUploaded", "multiple", "accept"], ["appearance", "outline"], ["matInput", "", "formControlName", "firstName"], ["matInput", "", "formControlName", "lastName"], ["matInput", "", "formControlName", "name"], ["matInput", "", "formControlName", "birthDate", 3, "matDatepicker"], ["matSuffix", "", 3, "for"], ["matInput", "", "formControlName", "location"], ["formControlName", "zoneInfo"], [3, "value"], ["formControlName", "locale"], ["matInput", "", "formControlName", "bio"]], template: function ProfileEditor_Template(rf, ctx) {
     if (rf & 1) {
-      \u0275\u0275conditionalCreate(0, ProfileEditor_Conditional_0_Template, 44, 7, "form", 1);
+      \u0275\u0275conditionalCreate(0, ProfileEditor_Conditional_0_Template, 44, 8, "form", 1);
     }
     if (rf & 2) {
       \u0275\u0275conditional(ctx.profile && ctx.form ? 0 : -1);
@@ -10278,7 +10245,7 @@ var ProfileEditor = class _ProfileEditor {
     ], template: `@if (profile && form) {
 <form [formGroup]="form">
     <div class="user-avatar">
-        <user-avatar [profile]="profile"></user-avatar>
+        <user-avatar [size]="'large'" [profile]="profile"></user-avatar>
         <deepin-file-uploader (fileUploaded)="onAvatarUploaded($event)" [multiple]="false"
             [accept]="'image/*'"></deepin-file-uploader>
     </div>
@@ -10482,27 +10449,45 @@ var LayoutService = class _LayoutService {
 })();
 
 // src/app/shared/components/sidebar/sidebar.component.ts
+function SidebarComponent_Conditional_20_Conditional_1_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275element(0, "img", 16);
+    \u0275\u0275pipe(1, "fileUrl");
+    \u0275\u0275pipe(2, "async");
+  }
+  if (rf & 2) {
+    const ctx_r2 = \u0275\u0275nextContext(2);
+    \u0275\u0275property("src", \u0275\u0275pipeBind1(2, 3, \u0275\u0275pipeBind1(1, 1, ctx_r2.profile.pictureId)), \u0275\u0275sanitizeUrl);
+  }
+}
+function SidebarComponent_Conditional_20_Conditional_2_Template(rf, ctx) {
+  if (rf & 1) {
+    \u0275\u0275elementStart(0, "mat-icon");
+    \u0275\u0275text(1, "account_circle");
+    \u0275\u0275elementEnd();
+  }
+}
 function SidebarComponent_Conditional_20_Template(rf, ctx) {
   if (rf & 1) {
     const _r2 = \u0275\u0275getCurrentView();
-    \u0275\u0275elementStart(0, "button", 17);
+    \u0275\u0275elementStart(0, "button", 11);
     \u0275\u0275listener("click", function SidebarComponent_Conditional_20_Template_button_click_0_listener() {
       \u0275\u0275restoreView(_r2);
       const ctx_r2 = \u0275\u0275nextContext();
       return \u0275\u0275resetView(ctx_r2.openProfileEditor());
     });
-    \u0275\u0275element(1, "user-avatar", 18);
+    \u0275\u0275conditionalCreate(1, SidebarComponent_Conditional_20_Conditional_1_Template, 3, 5, "img", 16)(2, SidebarComponent_Conditional_20_Conditional_2_Template, 2, 0, "mat-icon");
     \u0275\u0275elementEnd();
   }
   if (rf & 2) {
     const ctx_r2 = \u0275\u0275nextContext();
     \u0275\u0275advance();
-    \u0275\u0275property("profile", ctx_r2.profile);
+    \u0275\u0275conditional(ctx_r2.profile.pictureId ? 1 : 2);
   }
 }
 function SidebarComponent_Conditional_21_Template(rf, ctx) {
   if (rf & 1) {
-    \u0275\u0275elementStart(0, "button", 11)(1, "mat-icon");
+    \u0275\u0275elementStart(0, "button", 10)(1, "mat-icon");
     \u0275\u0275text(2, "account_circle");
     \u0275\u0275elementEnd()();
   }
@@ -10552,7 +10537,7 @@ var SidebarComponent = class _SidebarComponent {
   static \u0275fac = function SidebarComponent_Factory(__ngFactoryType__) {
     return new (__ngFactoryType__ || _SidebarComponent)(\u0275\u0275directiveInject(MatDialog), \u0275\u0275directiveInject(LayoutService), \u0275\u0275directiveInject(UserService));
   };
-  static \u0275cmp = /* @__PURE__ */ \u0275\u0275defineComponent({ type: _SidebarComponent, selectors: [["deepin-sidebar"]], decls: 57, vars: 3, consts: [["addMenu", "matMenu"], ["profileMenu", "matMenu"], [1, "sidebar"], ["mat-icon-button", "", "routerLink", "/home", "routerLinkActive", "active"], ["mat-icon-button", "", "routerLink", "/search", "routerLinkActive", "active"], ["mat-icon-button", "", "routerLink", "/chats", "routerLinkActive", "active"], ["mat-icon-button", "", "routerLink", "/spaces", "routerLinkActive", "active"], ["mat-icon-button", "", "routerLink", "/drive", "routerLinkActive", "active"], ["mat-icon-button", "", 3, "matMenuTriggerFor"], ["matListItemIcon", ""], ["mat-icon-button", "", 1, "profile-button"], ["mat-icon-button", ""], ["mat-icon-button", "", 3, "click"], ["mat-icon-button", "", "routerLink", "/settings"], ["yPosition", "above", "xPosition", "before"], ["mat-menu-item", ""], ["mat-menu-item", "", 3, "click"], ["mat-icon-button", "", 1, "profile-button", 3, "click"], ["size", "small", 3, "profile"]], template: function SidebarComponent_Template(rf, ctx) {
+  static \u0275cmp = /* @__PURE__ */ \u0275\u0275defineComponent({ type: _SidebarComponent, selectors: [["deepin-sidebar"]], decls: 57, vars: 3, consts: [["addMenu", "matMenu"], ["profileMenu", "matMenu"], [1, "sidebar"], ["mat-icon-button", "", "routerLink", "/home", "routerLinkActive", "active"], ["mat-icon-button", "", "routerLink", "/search", "routerLinkActive", "active"], ["mat-icon-button", "", "routerLink", "/chats", "routerLinkActive", "active"], ["mat-icon-button", "", "routerLink", "/spaces", "routerLinkActive", "active"], ["mat-icon-button", "", "routerLink", "/drive", "routerLinkActive", "active"], ["mat-icon-button", "", 3, "matMenuTriggerFor"], ["matListItemIcon", ""], ["mat-icon-button", ""], ["mat-icon-button", "", 3, "click"], ["mat-icon-button", "", "routerLink", "/settings"], ["yPosition", "above", "xPosition", "before"], ["mat-menu-item", ""], ["mat-menu-item", "", 3, "click"], ["alt", "Profile Picture", 1, "profile-picture", 3, "src"]], template: function SidebarComponent_Template(rf, ctx) {
     if (rf & 1) {
       const _r1 = \u0275\u0275getCurrentView();
       \u0275\u0275elementStart(0, "div", 2)(1, "a", 3)(2, "mat-icon");
@@ -10573,8 +10558,8 @@ var SidebarComponent = class _SidebarComponent {
       \u0275\u0275elementStart(16, "div", 2)(17, "button", 8)(18, "mat-icon", 9);
       \u0275\u0275text(19, "add");
       \u0275\u0275elementEnd()();
-      \u0275\u0275conditionalCreate(20, SidebarComponent_Conditional_20_Template, 2, 1, "button", 10)(21, SidebarComponent_Conditional_21_Template, 3, 0, "button", 11);
-      \u0275\u0275elementStart(22, "button", 12);
+      \u0275\u0275conditionalCreate(20, SidebarComponent_Conditional_20_Template, 3, 1, "button", 10)(21, SidebarComponent_Conditional_21_Template, 3, 0, "button", 10);
+      \u0275\u0275elementStart(22, "button", 11);
       \u0275\u0275listener("click", function SidebarComponent_Template_button_click_22_listener() {
         \u0275\u0275restoreView(_r1);
         return \u0275\u0275resetView(ctx.toggleTheme());
@@ -10582,16 +10567,16 @@ var SidebarComponent = class _SidebarComponent {
       \u0275\u0275elementStart(23, "mat-icon");
       \u0275\u0275text(24);
       \u0275\u0275elementEnd()();
-      \u0275\u0275elementStart(25, "a", 13)(26, "mat-icon");
+      \u0275\u0275elementStart(25, "a", 12)(26, "mat-icon");
       \u0275\u0275text(27, "settings");
       \u0275\u0275elementEnd()()();
-      \u0275\u0275elementStart(28, "mat-menu", 14, 0)(30, "button", 15)(31, "mat-icon");
+      \u0275\u0275elementStart(28, "mat-menu", 13, 0)(30, "button", 14)(31, "mat-icon");
       \u0275\u0275text(32, "person_add");
       \u0275\u0275elementEnd();
       \u0275\u0275elementStart(33, "span");
       \u0275\u0275text(34, "Add Frends");
       \u0275\u0275elementEnd()();
-      \u0275\u0275elementStart(35, "button", 16);
+      \u0275\u0275elementStart(35, "button", 15);
       \u0275\u0275listener("click", function SidebarComponent_Template_button_click_35_listener() {
         \u0275\u0275restoreView(_r1);
         return \u0275\u0275resetView(ctx.createGroup());
@@ -10602,7 +10587,7 @@ var SidebarComponent = class _SidebarComponent {
       \u0275\u0275elementStart(38, "span");
       \u0275\u0275text(39, "Create Group");
       \u0275\u0275elementEnd()();
-      \u0275\u0275elementStart(40, "button", 16);
+      \u0275\u0275elementStart(40, "button", 15);
       \u0275\u0275listener("click", function SidebarComponent_Template_button_click_40_listener() {
         \u0275\u0275restoreView(_r1);
         return \u0275\u0275resetView(ctx.createChannel());
@@ -10613,7 +10598,7 @@ var SidebarComponent = class _SidebarComponent {
       \u0275\u0275elementStart(43, "span");
       \u0275\u0275text(44, "Create Channel");
       \u0275\u0275elementEnd()()();
-      \u0275\u0275elementStart(45, "mat-menu", 14, 1)(47, "button", 16);
+      \u0275\u0275elementStart(45, "mat-menu", 13, 1)(47, "button", 15);
       \u0275\u0275listener("click", function SidebarComponent_Template_button_click_47_listener() {
         \u0275\u0275restoreView(_r1);
         return \u0275\u0275resetView(ctx.openProfileEditor());
@@ -10624,7 +10609,7 @@ var SidebarComponent = class _SidebarComponent {
       \u0275\u0275elementStart(50, "span");
       \u0275\u0275text(51, "View Profile");
       \u0275\u0275elementEnd()();
-      \u0275\u0275elementStart(52, "button", 16);
+      \u0275\u0275elementStart(52, "button", 15);
       \u0275\u0275listener("click", function SidebarComponent_Template_button_click_52_listener() {
         \u0275\u0275restoreView(_r1);
         return \u0275\u0275resetView(ctx.openProfileEditor());
@@ -10657,8 +10642,9 @@ var SidebarComponent = class _SidebarComponent {
     MatDialogModule,
     MatButtonModule,
     MatIconButton,
-    UserAvatar
-  ], styles: ["\n\n[_nghost-%COMP%] {\n  display: flex;\n  height: 100vh;\n  flex-direction: column;\n  justify-content: space-between;\n  --mat-button-filled-container-color: orange;\n  --mat-button-filled-label-text-color: red;\n}\n.sidebar[_ngcontent-%COMP%] {\n  display: flex;\n  flex-direction: column;\n  align-items: center;\n  gap: 0.5rem;\n  background-color: var(--mat-sys-background);\n  padding: 0.5rem 0;\n}\na.active[_ngcontent-%COMP%] {\n  background-color: var(--mat-sys-primary-container);\n}\n.profile-button[_ngcontent-%COMP%] {\n  overflow: hidden;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n}\n/*# sourceMappingURL=sidebar.component.css.map */"] });
+    AsyncPipe,
+    FileUrlPipe
+  ], styles: ["\n\n[_nghost-%COMP%] {\n  display: flex;\n  height: 100vh;\n  flex-direction: column;\n  justify-content: space-between;\n  --mat-button-filled-container-color: orange;\n  --mat-button-filled-label-text-color: red;\n}\n.sidebar[_ngcontent-%COMP%] {\n  display: flex;\n  flex-direction: column;\n  align-items: center;\n  gap: 0.5rem;\n  background-color: var(--mat-sys-background);\n  padding: 0.5rem 0;\n}\na.active[_ngcontent-%COMP%] {\n  background-color: var(--mat-sys-primary-container);\n}\n/*# sourceMappingURL=sidebar.component.css.map */"] });
 };
 (() => {
   (typeof ngDevMode === "undefined" || ngDevMode) && setClassMetadata(SidebarComponent, [{
@@ -10673,7 +10659,8 @@ var SidebarComponent = class _SidebarComponent {
       MatMenuTrigger,
       MatDialogModule,
       MatButtonModule,
-      UserAvatar
+      AsyncPipe,
+      FileUrlPipe
     ], template: `<div class="sidebar">
     <a mat-icon-button routerLink="/home" routerLinkActive="active">
         <mat-icon>home</mat-icon>
@@ -10697,8 +10684,12 @@ var SidebarComponent = class _SidebarComponent {
     </button>
 
     @if(profile) {
-    <button mat-icon-button class="profile-button" (click)="openProfileEditor()">
-        <user-avatar [profile]="profile" size="small"></user-avatar>
+    <button mat-icon-button (click)="openProfileEditor()">
+        @if(profile.pictureId){
+        <img [src]="profile.pictureId | fileUrl | async" alt="Profile Picture" class="profile-picture">
+        }@else {
+        <mat-icon>account_circle</mat-icon>
+        }
     </button>
     } @else {
     <button mat-icon-button>
@@ -10737,11 +10728,11 @@ var SidebarComponent = class _SidebarComponent {
         <mat-icon>person_add</mat-icon>
         <span>Edit Profile</span>
     </button>
-</mat-menu>`, styles: ["/* src/app/shared/components/sidebar/sidebar.component.scss */\n:host {\n  display: flex;\n  height: 100vh;\n  flex-direction: column;\n  justify-content: space-between;\n  --mat-button-filled-container-color: orange;\n  --mat-button-filled-label-text-color: red;\n}\n.sidebar {\n  display: flex;\n  flex-direction: column;\n  align-items: center;\n  gap: 0.5rem;\n  background-color: var(--mat-sys-background);\n  padding: 0.5rem 0;\n}\na.active {\n  background-color: var(--mat-sys-primary-container);\n}\n.profile-button {\n  overflow: hidden;\n  display: flex;\n  align-items: center;\n  justify-content: center;\n}\n/*# sourceMappingURL=sidebar.component.css.map */\n"] }]
+</mat-menu>`, styles: ["/* src/app/shared/components/sidebar/sidebar.component.scss */\n:host {\n  display: flex;\n  height: 100vh;\n  flex-direction: column;\n  justify-content: space-between;\n  --mat-button-filled-container-color: orange;\n  --mat-button-filled-label-text-color: red;\n}\n.sidebar {\n  display: flex;\n  flex-direction: column;\n  align-items: center;\n  gap: 0.5rem;\n  background-color: var(--mat-sys-background);\n  padding: 0.5rem 0;\n}\na.active {\n  background-color: var(--mat-sys-primary-container);\n}\n/*# sourceMappingURL=sidebar.component.css.map */\n"] }]
   }], () => [{ type: MatDialog }, { type: LayoutService }, { type: UserService }], null);
 })();
 (() => {
-  (typeof ngDevMode === "undefined" || ngDevMode) && \u0275setClassDebugInfo(SidebarComponent, { className: "SidebarComponent", filePath: "src/app/shared/components/sidebar/sidebar.component.ts", lineNumber: 33 });
+  (typeof ngDevMode === "undefined" || ngDevMode) && \u0275setClassDebugInfo(SidebarComponent, { className: "SidebarComponent", filePath: "src/app/shared/components/sidebar/sidebar.component.ts", lineNumber: 36 });
 })();
 
 // src/app/shared/components/layout/layout.component.ts
@@ -10780,7 +10771,7 @@ var LayoutComponent = class _LayoutComponent {
     MatSidenavContent,
     MatDivider,
     SidebarComponent
-  ], styles: ["\n\n[_nghost-%COMP%] {\n  display: flex;\n  flex-direction: column;\n  height: 100vh;\n}\nmat-sidenav-container[_ngcontent-%COMP%] {\n  flex: 1 1 auto;\n}\nmat-sidenav[_ngcontent-%COMP%] {\n  width: 4rem;\n}\nmat-sidenav-content[_ngcontent-%COMP%] {\n  border-left: 1px solid var(--mat-sys-outline-variant);\n  box-sizing: border-box;\n}\n/*# sourceMappingURL=layout.component.css.map */"] });
+  ], styles: ["\n\n[_nghost-%COMP%] {\n  display: flex;\n  flex-direction: column;\n  height: 100vh;\n}\nmat-sidenav-container[_ngcontent-%COMP%] {\n  flex: 1 1 auto;\n}\nmat-sidenav[_ngcontent-%COMP%] {\n  width: 64px;\n}\nmat-sidenav-content[_ngcontent-%COMP%] {\n  border-left: 1px solid var(--mat-sys-outline-variant);\n  box-sizing: border-box;\n}\n/*# sourceMappingURL=layout.component.css.map */"] });
 };
 (() => {
   (typeof ngDevMode === "undefined" || ngDevMode) && setClassMetadata(LayoutComponent, [{
@@ -10792,7 +10783,7 @@ var LayoutComponent = class _LayoutComponent {
       MatSidenavContent,
       MatDivider,
       SidebarComponent
-    ], template: '<mat-sidenav-container>\n    <mat-sidenav mode="side" opened>\n        <deepin-sidebar></deepin-sidebar>\n    </mat-sidenav>\n    <mat-divider [vertical]="true"></mat-divider>\n    <mat-sidenav-content>\n        <router-outlet></router-outlet>\n    </mat-sidenav-content>\n</mat-sidenav-container>', styles: ["/* src/app/shared/components/layout/layout.component.scss */\n:host {\n  display: flex;\n  flex-direction: column;\n  height: 100vh;\n}\nmat-sidenav-container {\n  flex: 1 1 auto;\n}\nmat-sidenav {\n  width: 4rem;\n}\nmat-sidenav-content {\n  border-left: 1px solid var(--mat-sys-outline-variant);\n  box-sizing: border-box;\n}\n/*# sourceMappingURL=layout.component.css.map */\n"] }]
+    ], template: '<mat-sidenav-container>\n    <mat-sidenav mode="side" opened>\n        <deepin-sidebar></deepin-sidebar>\n    </mat-sidenav>\n    <mat-divider [vertical]="true"></mat-divider>\n    <mat-sidenav-content>\n        <router-outlet></router-outlet>\n    </mat-sidenav-content>\n</mat-sidenav-container>', styles: ["/* src/app/shared/components/layout/layout.component.scss */\n:host {\n  display: flex;\n  flex-direction: column;\n  height: 100vh;\n}\nmat-sidenav-container {\n  flex: 1 1 auto;\n}\nmat-sidenav {\n  width: 64px;\n}\nmat-sidenav-content {\n  border-left: 1px solid var(--mat-sys-outline-variant);\n  box-sizing: border-box;\n}\n/*# sourceMappingURL=layout.component.css.map */\n"] }]
   }], () => [{ type: UserService }, { type: ChatHubService }], null);
 })();
 (() => {
@@ -10807,15 +10798,15 @@ var routes = [
     children: [
       {
         path: "home",
-        loadChildren: () => import("./chunk-IDURW67I.js")
+        loadChildren: () => import("./chunk-7SJ555JY.js")
       },
       {
         path: "chats",
-        loadChildren: () => import("./chunk-EJCP3LJT.js")
+        loadChildren: () => import("./chunk-2DBPM7KR.js")
       },
       {
         path: "search",
-        loadChildren: () => import("./chunk-YQGKF6QP.js")
+        loadChildren: () => import("./chunk-RTRMHLJB.js")
       },
       {
         path: "",

@@ -9,9 +9,10 @@
     }
 
     &-container {
-        display: flex;
-        flex-direction: column;
-        gap: .25rem;
+        flex: auto;
+        // display: flex;
+        // flex-direction: column;
+        // gap: .25rem;
     }
 
     &-content {
@@ -44,7 +45,7 @@
 
         .message-content {
             color: var(--mat-sys-on-surface);
-            background-color: var(--mat-sys-primary-container);
+            // background-color: var(--mat-sys-primary-container);
             border-radius: 1rem 0 1rem 1rem;
         }
     }
@@ -54,17 +55,17 @@
 
         .message-content {
             border-radius: 0 1rem 1rem 1rem;
-            background-color: var(--mat-sys-surface-container-high)
+            // background-color: var(--mat-sys-surface-container-high)
         }
     }
 
-    &-attachments {
+    &-medias {
         display: flex;
         flex-flow: wrap;
         gap: .5rem;
     }
 
-    &-attachment {
+    &-media {
         display: flex;
         flex-direction: column;
         max-width: calc(25% - .5rem);

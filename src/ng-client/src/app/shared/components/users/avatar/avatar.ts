@@ -17,6 +17,6 @@ export class UserAvatar implements OnInit {
   displayName?: string;
 
   ngOnInit(): void {
-    this.displayName = this.profile?.name || this.profile?.firstName || this.profile?.lastName || this.profile?.username || '';
+    this.displayName = this.profile?.name || this.profile?.firstName || this.profile?.lastName || this.profile?.userName || '';
   }
 }

@@ -1,7 +1,7 @@
 @if (profile && form) {
 <form [formGroup]="form">
     <div class="user-avatar">
-        <user-avatar [profile]="profile"></user-avatar>
+        <user-avatar [size]="'large'" [profile]="profile"></user-avatar>
         <deepin-file-uploader (fileUploaded)="onAvatarUploaded($event)" [multiple]="false"
             [accept]="'image/*'"></deepin-file-uploader>
     </div>
