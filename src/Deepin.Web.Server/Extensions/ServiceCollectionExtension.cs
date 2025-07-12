@@ -1,5 +1,6 @@
 using System;
 using Deepin.Web.Server.Services;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.OpenIdConnect;
 using Microsoft.AspNetCore.DataProtection;
@@ -28,7 +29,6 @@ public static class ServiceCollectionExtension
             options.DefaultSignInScheme = CookieAuthenticationDefaults.AuthenticationScheme;
             options.DefaultChallengeScheme = OpenIdConnectDefaults.AuthenticationScheme;
         })
-        .AddCookie(CookieAuthenticationDefaults.AuthenticationScheme)
         .AddOpenIdConnect(OpenIdConnectDefaults.AuthenticationScheme, options =>
         {
             options.Authority = identitySection["Url"];
@@ -38,6 +38,7 @@ public static class ServiceCollectionExtension
             options.SaveTokens = true;
             options.Scope.Add("openid");
             options.Scope.Add("profile");
+            options.Scope.Add("offline_access");
             var scopes = identitySection.GetRequiredSection("Scopes").Get<IDictionary<string, string>>();
             if (scopes != null)
             {
@@ -47,6 +48,37 @@ public static class ServiceCollectionExtension
                 }
             }
             options.GetClaimsFromUserInfoEndpoint = true;
+
+            options.UseTokenLifetime = true;
+            options.RefreshOnIssuerKeyNotFound = true;
+            options.RefreshInterval = TimeSpan.FromMinutes(5);
+            options.AutomaticRefreshInterval = TimeSpan.FromMinutes(30);
+            options.Events = new OpenIdConnectEvents
+            {
+                OnTokenResponseReceived = context =>
+                {
+                    if (context.TokenEndpointResponse.Error is null)
+                    {
+                        context.Properties?.StoreTokens(context.TokenEndpointResponse.Parameters.Select(kvp => new AuthenticationToken
+                        {
+                            Name = kvp.Key,
+                            Value = kvp.Value
+                        }));
+                    }
+                    else
+                    {
+                        context.Fail(new Exception($"OpenID Connect error: {context.TokenEndpointResponse.Error} - {context.TokenEndpointResponse.ErrorDescription}"));
+
+                    }
+                    return Task.CompletedTask;
+                }
+            };
+        })
+        .AddCookie(CookieAuthenticationDefaults.AuthenticationScheme, options =>
+        {
+            options.Cookie.Name = "deepin.web.auth";
+            options.ExpireTimeSpan = TimeSpan.FromDays(7);
+            options.SlidingExpiration = true;
         });
         return services;
     }

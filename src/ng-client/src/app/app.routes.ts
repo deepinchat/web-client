@@ -19,6 +19,10 @@ export const routes: Routes = [
                 loadChildren: () => import('./search/search.routes')
             },
             {
+                path: 'contacts',
+                loadChildren: () => import('./contacts/contacts.routes')
+            },
+            {
                 path: '',
                 redirectTo: 'home',
                 pathMatch: 'full'

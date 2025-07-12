@@ -17,7 +17,8 @@ import { PagedResult } from '../core/models/pagination.model';
 import { UserService } from '../core/services/user.service';
 import { debounceTime, distinctUntilChanged, firstValueFrom, of, switchMap } from 'rxjs';
 import { FileUrlPipe } from '../shared/pipes/file-url.pipe';
-import { ImageComponent } from '../shared/components/image/image.component';
+import { ProfileViewerDialog } from '../shared/components/users/profile-viewer-dialog/profile-viewer-dialog';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'search',
@@ -59,7 +60,8 @@ export class Search implements OnInit {
   botsCount = 0;
 
   constructor(
-    private userService: UserService
+    private userService: UserService,
+    private dialog: MatDialog
   ) { }
 
   ngOnInit() {
@@ -111,11 +113,6 @@ export class Search implements OnInit {
     this.hasSearched = false;
   }
 
-  onUserClick(user: UserProfile) {
-    // Handle user click - navigate to user profile or start chat
-    console.log('User clicked:', user);
-  }
-
   onChatClick(chat: Chat) {
     // Handle chat click - navigate to chat
     console.log('Chat clicked:', chat);
@@ -129,5 +126,13 @@ export class Search implements OnInit {
   onBotClick(bot: UserProfile) {
     // Handle bot click - navigate to bot or start conversation
     console.log('Bot clicked:', bot);
+  }
+
+  onUserClick(user: UserProfile) {
+    // Open profile viewer dialog
+    const dialogRef = this.dialog.open(ProfileViewerDialog, {
+      data: { id: user.id },
+      width: '400px'
+    });
   }
 }

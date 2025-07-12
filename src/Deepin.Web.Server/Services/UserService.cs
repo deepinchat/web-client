@@ -8,6 +8,7 @@ namespace Deepin.Web.Server.Services;
 public interface IUserService
 {
     Task<UserProfile?> GetProfileAsync(Guid userId, CancellationToken cancellationToken = default);
+    Task<IEnumerable<UserProfile>?> BatchGetProfilesAsync(IEnumerable<Guid> userIds, CancellationToken cancellationToken = default);
     Task<UserProfile?> UpdateProfileAsync(Guid userId, UserProfileRequest request, CancellationToken cancellationToken = default);
     Task<IPagedResult<UserProfile>> SearchUsersAsync(SearchUsersRequest request, CancellationToken cancellationToken = default);
 }
@@ -53,5 +54,23 @@ public class UserService(IDeepinApiClient deepinApiClient) : IUserService
         }
         var items = users.Items.Select(u => u.ToModel()).ToArray();
         return new PagedResult<UserProfile>(items, request.Offset, request.Limit, users.TotalCount);
+    }
+
+    public async Task<IEnumerable<UserProfile>?> BatchGetProfilesAsync(IEnumerable<Guid> userIds, CancellationToken cancellationToken = default)
+    {
+        if (userIds == null || !userIds.Any())
+        {
+            return [];
+        }
+
+        var users = await deepinApiClient.Users.BatchGetUsersAsync(new BatchGetUsersRequest
+        {
+            Ids = userIds.ToList()
+        }, cancellationToken);
+        if (users == null || !users.Any())
+        {
+            return [];
+        }
+        return users.Select(u => u.ToModel());
     }
 }

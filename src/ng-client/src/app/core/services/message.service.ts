@@ -14,7 +14,7 @@ export class MessageService {
     return this.httpClient.get<PagedResult<Message>>(`/api/messages`, {
       params: {
         chatId: query.chatId,
-        sortBy: query.direction === 'forward' ? 'descending' : 'ascending',
+        sortBy: query.direction === 'forward' ? 'desc' : 'asc',
         limit: query.limit,
         offset: query.offset,
         anchorSquence: query.anchorSquence

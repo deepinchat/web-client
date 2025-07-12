@@ -1,1 +1,44 @@
-<p>profile-viewer works!</p>
+@if(profile){
+<mat-card class="example-card" appearance="outlined">
+    <mat-card-header>
+        <mat-card-title-group>
+            <mat-card-title>
+                {{profile.name}}
+            </mat-card-title>
+            @if(profile.userName){
+            <mat-card-subtitle>
+                {{ '@' + profile.userName}}
+            </mat-card-subtitle>
+            }
+            <mat-card-subtitle>
+                {{profile.email}}
+            </mat-card-subtitle>
+            @if (profile.pictureId) {
+            <img mat-card-md-image [src]="profile.pictureId | fileUrl | async" />
+            }@else {
+            <mat-icon mat-card-md-image>person</mat-icon>
+            }
+        </mat-card-title-group>
+    </mat-card-header>
+    <mat-card-content>
+        <div class="profile-details">
+            <p>
+                <label>Location:</label>
+                <span>{{profile.location}}</span>
+            </p>
+            <p>
+                <label>TimeZone:</label>
+                <span>{{profile.zoneInfo}}</span>
+            </p>
+            <p>
+                <label>Bio:</label>
+                @if (!profile.bio) {
+                <span class="no-bio">No bio available</span>
+                }@else {
+                <span class="bio">{{profile.bio}}</span>
+                }
+            </p>
+        </div>
+    </mat-card-content>
+</mat-card>
+}

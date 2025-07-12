@@ -1,3 +1,4 @@
+using System.Text.Json;
 using Deepin.Internal.SDK.Extensions;
 using Deepin.Web.Server.Services;
 using Microsoft.AspNetCore.Authentication;
@@ -22,10 +23,22 @@ public static class HostExtensions
         {
             options.BaseUrl = builder.Configuration["DeepinApiUrl"] ?? throw new ArgumentNullException("DeepinApiUrl");
             options.Timeout = TimeSpan.FromSeconds(30);
+            options.JsonSerializerOptions = new JsonSerializerOptions
+            {
+                PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
+                PropertyNameCaseInsensitive = true,
+                Converters =
+                {
+                    new System.Text.Json.Serialization.JsonStringEnumConverter()
+                },
+                DefaultIgnoreCondition = System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingNull,
+                WriteIndented = true
+            };
         }).AddHttpMessageHandler<HttpClientAuthorizationDelegatingHandler>();
         builder.Services.AddScoped<IChatService, ChatService>();
         builder.Services.AddScoped<IMessageService, MessageService>();
         builder.Services.AddScoped<IUserService, UserService>();
+        builder.Services.AddScoped<IContactService, ContactService>();
         builder.Services.AddReverseProxy()
             .AddTransforms<AccessTokenTransformProvider>()
             .LoadFromConfig(builder.Configuration.GetSection("ReverseProxy"));

@@ -1,0 +1,16 @@
+@if(contact){
+<a mat-list-item [routerLink]="[contact.id]">
+    @if(contact.profile && contact.profile.pictureId){
+    <img matListItemAvatar [src]="contact.profile.pictureId | fileUrl | async" alt="{{contact.name}}" class="avatar" />
+    }
+    @else{
+    <mat-icon matListItemAvatar class="avatar-icon">person</mat-icon>
+    }
+    <h3 matListItemTitle>
+        <span>{{contact.name}}</span>
+    </h3>
+    <small matListItemMeta>
+        Added on {{contact.createdAt | date }}
+    </small>
+</a>
+}

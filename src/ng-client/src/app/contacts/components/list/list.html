@@ -1,0 +1,5 @@
+<mat-list class="thin-scrollbar">
+    @for (item of result.items; track $index) {
+    <contact-list-item [contact]="item"></contact-list-item>
+    }
+</mat-list>

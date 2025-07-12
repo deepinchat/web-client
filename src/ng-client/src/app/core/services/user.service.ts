@@ -19,6 +19,10 @@ export class UserService {
     });
   }
 
+  get currentUser() {
+    return this._user.value;
+  }
+
   getMyProfile() {
     return this.httpClient.get<UserProfile>('/api/users/me')
       .pipe(map(res => {

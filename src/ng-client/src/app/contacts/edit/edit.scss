@@ -1,0 +1,19 @@
+:host {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    padding: 1rem;
+
+    .contact-edit-form {
+        display: flex;
+        flex-direction: column;
+        gap: .75rem;
+        min-width: 10rem;
+        max-width: 30rem;
+    }
+    .button-group {
+        display: flex;
+        justify-content: flex-end;
+        gap: .5rem;
+    }
+}

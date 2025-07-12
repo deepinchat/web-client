@@ -1,3 +1,4 @@
+using Deepin.Internal.SDK.DTOs;
 using Deepin.Internal.SDK.Models;
 using Deepin.Web.Server.Constants;
 using Deepin.Web.Server.Models;
@@ -153,6 +154,28 @@ public static class ModelExtensions
                 StartIndex = m.StartIndex,
                 EndIndex = m.EndIndex
             }) ?? []
+        };
+    }
+    public static ContactModel ToModel(this ContactDto contact, UserProfile? profile = null)
+    {
+        return new ContactModel
+        {
+            Id = contact.Id,
+            Name = contact.Name,
+            FirstName = contact.FirstName,
+            LastName = contact.LastName,
+            Company = contact.Company,
+            Birthday = contact.Birthday,
+            Email = contact.Email,
+            PhoneNumber = contact.PhoneNumber,
+            CreatedAt = contact.CreatedAt,
+            UpdatedAt = contact.UpdatedAt,
+            IsBlocked = contact.IsBlocked,
+            IsStarred = contact.IsStarred,
+            Address = contact.Address,
+            Notes = contact.Notes,
+            CreatedBy = contact.CreatedBy,
+            Profile = profile
         };
     }
 }

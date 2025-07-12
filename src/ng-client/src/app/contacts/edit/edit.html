@@ -1,0 +1,57 @@
+<h2>
+    Edit Contact
+</h2>
+@if(form){
+<form [formGroup]="form" class="contact-edit-form" (ngSubmit)="onSubmit()">
+    <mat-form-field appearance="outline">
+        <mat-label>Display Name</mat-label>
+        <input matInput formControlName="name">
+    </mat-form-field>
+    <table class="example-full-width" cellspacing="0">
+        <tr>
+            <td>
+                <mat-form-field appearance="outline" class="example-full-width">
+                    <mat-label>First name</mat-label>
+                    <input matInput formControlName="firstName">
+                </mat-form-field>
+            </td>
+            <td><mat-form-field appearance="outline" class="example-full-width">
+                    <mat-label>Last Name</mat-label>
+                    <input matInput formControlName="lastName">
+                </mat-form-field>
+            </td>
+        </tr>
+    </table>
+    <mat-form-field appearance="outline">
+        <mat-label>Email</mat-label>
+        <input matInput formControlName="email">
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+        <mat-label>Phone</mat-label>
+        <input matInput formControlName="phoneNumber">
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+        <mat-label>BirthDate</mat-label>
+        <input matInput [matDatepicker]="picker" formControlName="birthday">
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+        <mat-label>Address</mat-label>
+        <textarea matInput formControlName="address"></textarea>
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+        <mat-label>Company</mat-label>
+        <input matInput formControlName="company">
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+        <mat-label>Notes</mat-label>
+        <textarea matInput formControlName="notes"></textarea>
+    </mat-form-field>
+    <div class="button-group">
+        <button matButton="filled" type="submit" [disabled]="form.invalid">
+            Save
+        </button>
+    </div>
+</form>
+}

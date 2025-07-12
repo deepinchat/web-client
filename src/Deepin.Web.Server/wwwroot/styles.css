@@ -208,6 +208,9 @@ body {
   transition: scrollbar-color 0.5s ease;
   -webkit-overflow-scrolling: touch;
 }
+.item-spacer {
+  flex: 1 1 auto;
+}
 
 /* angular:styles/global:styles */
 /*# sourceMappingURL=styles.css.map */

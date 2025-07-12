@@ -8,8 +8,10 @@
     <a mat-icon-button routerLink="/chats" routerLinkActive="active">
         <mat-icon>chat</mat-icon>
     </a>
-    <a mat-icon-button routerLink="/spaces" routerLinkActive="active">
-        <mat-icon>group</mat-icon>
+    <a mat-icon-button routerLink="/contacts" routerLinkActive="active">
+        <mat-icon>
+            contacts
+        </mat-icon>
     </a>
     <a mat-icon-button routerLink="/drive" routerLinkActive="active">
         <mat-icon>cloud</mat-icon>
@@ -19,7 +21,11 @@
     <button mat-icon-button [matMenuTriggerFor]="addMenu">
         <mat-icon matListItemIcon>add</mat-icon>
     </button>
-
+    <button mat-icon-button (click)="toggleTheme()">
+        <mat-icon>
+            {{ theme == 'light' ? 'dark_mode' : 'light_mode' }}
+        </mat-icon>
+    </button>
     @if(profile) {
     <button mat-icon-button (click)="openProfileEditor()">
         @if(profile.pictureId){
@@ -33,11 +39,6 @@
         <mat-icon>account_circle</mat-icon>
     </button>
     }
-    <button mat-icon-button (click)="toggleTheme()">
-        <mat-icon>
-            {{ theme == 'light' ? 'dark_mode' : 'light_mode' }}
-        </mat-icon>
-    </button>
     <a mat-icon-button routerLink="/settings">
         <mat-icon>settings</mat-icon>
     </a>
