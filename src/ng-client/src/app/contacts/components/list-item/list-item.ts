@@ -2,13 +2,13 @@ import { Component, Input } from '@angular/core';
 import { ContactModel } from '../../../core/models/contacts.model';
 import { RouterLink } from '@angular/router';
 import { AsyncPipe, DatePipe, CommonModule } from '@angular/common';
-import { MatListItem, MatListItemAvatar, MatListItemTitle, MatListItemMeta } from '@angular/material/list';
+import { MatListItem, MatListItemAvatar, MatListItemTitle, MatListItemMeta, MatListItemLine } from '@angular/material/list';
 import { FileUrlPipe } from '../../../shared/pipes/file-url.pipe';
-import { MatIcon } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { AvatarComponent } from '../../../shared/components/avatar/avatar.component';
+import { SubStringPipe } from '../../../shared/pipes/sub-string.pipe';
 
 @Component({
   selector: 'contact-list-item',
@@ -20,13 +20,14 @@ import { AvatarComponent } from '../../../shared/components/avatar/avatar.compon
     MatListItemAvatar,
     MatListItemTitle,
     MatListItemMeta,
+    MatListItemLine,
     MatButtonModule,
     MatChipsModule,
     MatTooltipModule,
     FileUrlPipe,
     AsyncPipe,
-    MatIcon,
-    AvatarComponent
+    AvatarComponent,
+    SubStringPipe
   ],
   templateUrl: './list-item.html',
   styleUrl: './list-item.scss'
