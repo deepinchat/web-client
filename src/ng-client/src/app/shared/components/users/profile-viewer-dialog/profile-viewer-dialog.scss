@@ -1,0 +1,14 @@
+.dialog-header {
+    border-bottom: 1px solid var(--mat-sys-outline-variant);
+}
+
+.dialog-content {
+    max-height: 70vh;
+    padding-bottom: 24px;
+}
+
+.dialog-actions {
+    border-top: 1px solid var(--mat-sys-outline-variant);
+    justify-content: flex-end;
+    gap: 0.5rem;
+}

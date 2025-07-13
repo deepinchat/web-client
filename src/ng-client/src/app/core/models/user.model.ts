@@ -10,6 +10,7 @@ export interface UserProfileRequest {
     locale?: string;
     location?: string;
     zoneInfo?: string;
+    company?: string;
 }
 
 export interface UserProfile extends UserProfileRequest {
@@ -19,6 +20,7 @@ export interface UserProfile extends UserProfileRequest {
     phoneNumber?: string;
     createdAt: string;
     updatedAt: string;
+    pictureUrl?: string;
 }
 
 export interface UserPresence {

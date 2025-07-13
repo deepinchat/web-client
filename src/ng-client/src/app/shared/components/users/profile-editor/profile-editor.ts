@@ -91,6 +91,7 @@ export class ProfileEditor implements OnInit {
       zoneInfo: this.fb.control(profile.zoneInfo || '', []),
       birthDate: this.fb.control(profile.birthDate || '', []),
       pictureId: this.fb.control(profile.pictureId || '', []),
+      company: this.fb.control(profile.company || '', []),
     });
   }
 

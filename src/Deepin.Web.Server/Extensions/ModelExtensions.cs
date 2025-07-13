@@ -56,7 +56,7 @@ public static class ModelExtensions
         }
         if (!string.IsNullOrEmpty(request.PictureId))
         {
-            claims.Add(new UserCliamRequest(DeepinClaimTypes.Picture, request.PictureId));
+            claims.Add(new UserCliamRequest(DeepinClaimTypes.PictureId, request.PictureId));
         }
         if (!string.IsNullOrEmpty(request.BirthDate))
         {
@@ -72,11 +72,15 @@ public static class ModelExtensions
         }
         if (!string.IsNullOrEmpty(request.Bio))
         {
-            claims.Add(new UserCliamRequest("bio", request.Bio));
+            claims.Add(new UserCliamRequest(DeepinClaimTypes.Bio, request.Bio));
         }
         if (!string.IsNullOrEmpty(request.Location))
         {
             claims.Add(new UserCliamRequest(DeepinClaimTypes.Location, request.Location));
+        }
+        if (!string.IsNullOrEmpty(request.Company))
+        {
+            claims.Add(new UserCliamRequest(DeepinClaimTypes.Company, request.Company));
         }
         return claims;
     }
@@ -105,8 +109,11 @@ public static class ModelExtensions
                     case DeepinClaimTypes.Name:
                         profile.Name = claim.ClaimValue;
                         break;
-                    case DeepinClaimTypes.Picture:
+                    case DeepinClaimTypes.PictureId:
                         profile.PictureId = claim.ClaimValue;
+                        break;
+                    case DeepinClaimTypes.Picture:
+                        profile.PictureUrl = claim.ClaimValue;
                         break;
                     case DeepinClaimTypes.BirthDate:
                         profile.BirthDate = claim.ClaimValue;
@@ -120,8 +127,11 @@ public static class ModelExtensions
                     case DeepinClaimTypes.Location:
                         profile.Location = claim.ClaimValue;
                         break;
-                    case "bio":
+                    case DeepinClaimTypes.Bio:
                         profile.Bio = claim.ClaimValue;
+                        break;
+                    case DeepinClaimTypes.Company:
+                        profile.Company = claim.ClaimValue;
                         break;
                 }
             }

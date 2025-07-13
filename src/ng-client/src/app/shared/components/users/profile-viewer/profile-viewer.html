@@ -1,43 +1,88 @@
-@if(profile){
-<mat-card class="example-card" appearance="outlined">
-    <mat-card-header>
+@if(profile) {
+<mat-card class="profile-card" appearance="outlined">
+    <mat-card-header class="profile-header">
         <mat-card-title-group>
-            <mat-card-title>
-                {{profile.name}}
-            </mat-card-title>
-            @if(profile.userName){
-            <mat-card-subtitle>
-                {{ '@' + profile.userName}}
-            </mat-card-subtitle>
-            }
-            <mat-card-subtitle>
-                {{profile.email}}
-            </mat-card-subtitle>
-            @if (profile.pictureId) {
-            <img mat-card-md-image [src]="profile.pictureId | fileUrl | async" />
-            }@else {
-            <mat-icon mat-card-md-image>person</mat-icon>
-            }
+            <div class="profile-avatar">
+                @if (profile.pictureId) {
+                <img mat-card-md-image [src]="profile.pictureId | fileUrl | async" alt="Profile picture" />
+                }
+                @else if(profile.pictureUrl) {
+                <img mat-card-md-image [src]="profile.pictureUrl" alt="Profile picture" />
+                }
+                @else {
+                <mat-icon mat-card-md-image>person</mat-icon>
+                }
+            </div>
+            <div class="profile-info">
+                <mat-card-title class="profile-name">
+                    {{profile.name || 'No display name'}}
+                </mat-card-title>
+                @if(profile.userName) {
+                <mat-card-subtitle class="profile-username">
+                    {{'@' + profile.userName}}
+                </mat-card-subtitle>
+                }
+                @if(profile.email) {
+                <mat-card-subtitle class="profile-email">
+                    {{profile.email}}
+                </mat-card-subtitle>
+                }
+            </div>
         </mat-card-title-group>
     </mat-card-header>
-    <mat-card-content>
-        <div class="profile-details">
-            <p>
-                <label>Location:</label>
-                <span>{{profile.location}}</span>
-            </p>
-            <p>
-                <label>TimeZone:</label>
-                <span>{{profile.zoneInfo}}</span>
-            </p>
-            <p>
-                <label>Bio:</label>
-                @if (!profile.bio) {
-                <span class="no-bio">No bio available</span>
-                }@else {
-                <span class="bio">{{profile.bio}}</span>
+
+    <mat-card-content class="profile-content">
+        <div class="profile-section">
+            <h3 class="section-title">Basic Information</h3>
+            <div class="info-grid">
+                @if(profile.firstName || profile.lastName) {
+                <div class="info-item">
+                    <span class="info-label">Full Name:</span>
+                    <span class="info-value">{{(profile.firstName || '') + ' ' + (profile.lastName || '')}}</span>
+                </div>
                 }
-            </p>
+                @if(profile.birthDate) {
+                <div class="info-item">
+                    <span class="info-label">Birth Date:</span>
+                    <span class="info-value">{{profile.birthDate | date:'mediumDate'}}</span>
+                </div>
+                }
+            </div>
+        </div>
+
+        @if(profile.location || profile.zoneInfo) {
+        <div class="profile-section">
+            <h3 class="section-title">Location & Time</h3>
+            <div class="info-grid">
+                @if(profile.location) {
+                <div class="info-item">
+                    <span class="info-label">Location:</span>
+                    <span class="info-value">{{profile.location}}</span>
+                </div>
+                }
+                @if(profile.zoneInfo) {
+                <div class="info-item">
+                    <span class="info-label">Time Zone:</span>
+                    <span class="info-value">{{profile.zoneInfo}}</span>
+                </div>
+                }
+                @if(profile.locale) {
+                <div class="info-item">
+                    <span class="info-label">Language:</span>
+                    <span class="info-value">{{profile.locale}}</span>
+                </div>
+                }
+            </div>
+        </div>
+        }
+
+        <div class="profile-section">
+            <h3 class="section-title">About</h3>
+            @if (profile.bio) {
+            <p class="bio-text">{{profile.bio}}</p>
+            } @else {
+            <p class="no-bio">No bio available</p>
+            }
         </div>
     </mat-card-content>
 </mat-card>

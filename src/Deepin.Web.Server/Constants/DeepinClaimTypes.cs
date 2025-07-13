@@ -6,9 +6,11 @@ public static class DeepinClaimTypes
     public const string LastName = "last_name";
     public const string Name = "name";
     public const string Picture = "picture";
+    public const string PictureId = "picture_id";
     public const string ZoneInfo = "zoneinfo";
     public const string Locale = "locale";
     public const string BirthDate = "birthdate";
     public const string Bio = "bio";
     public const string Location = "location";
+    public const string Company = "company";
 }

@@ -8,6 +8,7 @@ public class UserProfile : UserProfileRequest
     public string? PhoneNumber { get; set; }
     public DateTimeOffset CreatedAt { get; set; }
     public DateTimeOffset UpdatedAt { get; set; }
+    public string? PictureUrl { get; set; }
 }
 public class UserProfileRequest
 {
@@ -26,4 +27,5 @@ public class UserProfileRequest
     public string? Locale { get; set; }
     public string? Location { get; set; }
     public string? Bio { get; set; }
+    public string? Company { get; set; }
 }
