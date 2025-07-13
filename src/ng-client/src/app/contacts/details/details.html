@@ -1,197 +1,146 @@
 <div class="contact-details-container">
-  <mat-card class="contact-details-card">
-    <mat-card-header>
-      <mat-card-title>
+  @if (isLoading) {
+  <div class="loading-overlay">
+    <mat-spinner diameter="40"></mat-spinner>
+  </div>
+  }
+
+  @if (contact && !isLoading) {
+  <div class="contact-details-content">
+    
+    <!-- Basic Information -->
+    <div class="details-section">
+      <h3 class="section-title">
         <mat-icon>person</mat-icon>
-        Contact Details
-      </mat-card-title>
-      <mat-card-subtitle>
-        View contact information
-      </mat-card-subtitle>
-    </mat-card-header>
-
-    <mat-card-content>
-      @if (isLoading) {
-        <div class="loading-overlay">
-          <mat-spinner diameter="40"></mat-spinner>
-        </div>
-      }
-
-      @if (contact && !isLoading) {
-        <div class="contact-details-content">
-          
-          <!-- Basic Information -->
-          <div class="details-section">
-            <h3 class="section-title">
-              <mat-icon>person</mat-icon>
-              Basic Information
-            </h3>
-            
-            <div class="details-grid">
-              <div class="detail-item">
-                <label class="detail-label">Display Name</label>
-                <div class="detail-value">{{ contact.name || 'Not provided' }}</div>
-              </div>
-              
-              <div class="detail-item">
-                <label class="detail-label">First Name</label>
-                <div class="detail-value">{{ contact.firstName || 'Not provided' }}</div>
-              </div>
-              
-              <div class="detail-item">
-                <label class="detail-label">Last Name</label>
-                <div class="detail-value">{{ contact.lastName || 'Not provided' }}</div>
-              </div>
-              
-              <div class="detail-item">
-                <label class="detail-label">Company</label>
-                <div class="detail-value">{{ contact.company || 'Not provided' }}</div>
-              </div>
-            </div>
-          </div>
-
-          <!-- Contact Information -->
-          <div class="details-section">
-            <h3 class="section-title">
-              <mat-icon>contact_phone</mat-icon>
-              Contact Information
-            </h3>
-            
-            <div class="details-grid">
-              <div class="detail-item">
-                <label class="detail-label">Email</label>
-                <div class="detail-value">
-                  @if (contact.email) {
-                    <a [href]="'mailto:' + contact.email" class="contact-link">
-                      <mat-icon>email</mat-icon>
-                      {{ contact.email }}
-                    </a>
-                  } @else {
-                    <span>Not provided</span>
-                  }
-                </div>
-              </div>
-              
-              <div class="detail-item">
-                <label class="detail-label">Phone Number</label>
-                <div class="detail-value">
-                  @if (contact.phoneNumber) {
-                    <a [href]="'tel:' + contact.phoneNumber" class="contact-link">
-                      <mat-icon>phone</mat-icon>
-                      {{ contact.phoneNumber }}
-                    </a>
-                  } @else {
-                    <span>Not provided</span>
-                  }
-                </div>
-              </div>
-              
-              <div class="detail-item">
-                <label class="detail-label">Address</label>
-                <div class="detail-value">{{ contact.address || 'Not provided' }}</div>
-              </div>
-              
-              <div class="detail-item">
-                <label class="detail-label">Birthday</label>
-                <div class="detail-value">{{ formatBirthday(contact.birthday!) || 'Not provided' }}</div>
-              </div>
-            </div>
-          </div>
-
-          <!-- Additional Information -->
-          <div class="details-section">
-            <h3 class="section-title">
-              <mat-icon>info</mat-icon>
-              Additional Information
-            </h3>
-            
-            <div class="details-grid">
-              <div class="detail-item full-width">
-                <label class="detail-label">Notes</label>
-                <div class="detail-value notes-value">{{ contact.notes || 'No notes available' }}</div>
-              </div>
-              
-              <div class="detail-item">
-                <label class="detail-label">Created</label>
-                <div class="detail-value">{{ formatDate(contact.createdAt) }}</div>
-              </div>
-              
-              <div class="detail-item">
-                <label class="detail-label">Last Updated</label>
-                <div class="detail-value">{{ formatDate(contact.updatedAt) }}</div>
-              </div>
-            </div>
-          </div>
-
-          <!-- Status Information -->
-          <div class="details-section">
-            <h3 class="section-title">
-              <mat-icon>settings</mat-icon>
-              Status
-            </h3>
-            
-            <div class="status-chips">
-              <mat-chip-set>
-                @if (contact.isStarred) {
-                  <mat-chip class="starred-chip">
-                    <mat-icon matChipAvatar>star</mat-icon>
-                    Starred
-                  </mat-chip>
-                }
-                @if (contact.isBlocked) {
-                  <mat-chip class="blocked-chip">
-                    <mat-icon matChipAvatar>block</mat-icon>
-                    Blocked
-                  </mat-chip>
-                }
-                @if (!contact.isStarred && !contact.isBlocked) {
-                  <mat-chip class="normal-chip">
-                    <mat-icon matChipAvatar>check_circle</mat-icon>
-                    Active
-                  </mat-chip>
-                }
-              </mat-chip-set>
-            </div>
-          </div>
-        </div>
-      }
-
-      @if (!contact && !isLoading) {
-        <div class="no-contact">
-          <mat-icon>person_off</mat-icon>
-          <p>Contact not found</p>
-        </div>
-      }
-    </mat-card-content>
-
-    <mat-card-actions class="card-actions">
-      <button mat-button (click)="onBack()" class="back-button">
-        <mat-icon>arrow_back</mat-icon>
-        Back to Contacts
-      </button>
+        Basic Information
+      </h3>
       
-      <div class="action-buttons">
-        @if (contact) {
-          <button mat-button (click)="onToggleStar()" 
-                  [class.starred]="contact.isStarred"
-                  class="star-button">
-            <mat-icon>{{ contact.isStarred ? 'star' : 'star_border' }}</mat-icon>
-            {{ contact.isStarred ? 'Unstar' : 'Star' }}
-          </button>
-          
-          <button mat-button (click)="onToggleBlock()" 
-                  [class.blocked]="contact.isBlocked"
-                  class="block-button">
-            <mat-icon>{{ contact.isBlocked ? 'lock_open' : 'block' }}</mat-icon>
-            {{ contact.isBlocked ? 'Unblock' : 'Block' }}
-          </button>
-          
-          <button mat-raised-button color="primary" (click)="onEdit()" class="edit-button">
-            <mat-icon>edit</mat-icon>
-            Edit Contact
-          </button>
-        }
+      <div class="details-grid">
+        <div class="detail-item">
+          <label class="detail-label">Display Name</label>
+          <div class="detail-value">{{ contact.name || 'Not provided' }}</div>
+        </div>
+        
+        <div class="detail-item">
+          <label class="detail-label">First Name</label>
+          <div class="detail-value">{{ contact.firstName || 'Not provided' }}</div>
+        </div>
+        
+        <div class="detail-item">
+          <label class="detail-label">Last Name</label>
+          <div class="detail-value">{{ contact.lastName || 'Not provided' }}</div>
+        </div>
+        
+        <div class="detail-item">
+          <label class="detail-label">Company</label>
+          <div class="detail-value">{{ contact.company || 'Not provided' }}</div>
+        </div>
       </div>
-    </mat-card-actions>
-  </mat-card>
+    </div>
+
+    <!-- Contact Information -->
+    <div class="details-section">
+      <h3 class="section-title">
+        <mat-icon>contact_mail</mat-icon>
+        Contact Information
+      </h3>
+      
+      <div class="details-grid">
+        <div class="detail-item">
+          <label class="detail-label">Email</label>
+          <div class="detail-value">
+            @if (contact.email) {
+            <a [href]="'mailto:' + contact.email" class="contact-link">
+              <mat-icon>email</mat-icon>
+              {{ contact.email }}
+            </a>
+            } @else {
+            <span>Not provided</span>
+            }
+          </div>
+        </div>
+        
+        <div class="detail-item">
+          <label class="detail-label">Phone Number</label>
+          <div class="detail-value">
+            @if (contact.phoneNumber) {
+            <a [href]="'tel:' + contact.phoneNumber" class="contact-link">
+              <mat-icon>phone</mat-icon>
+              {{ contact.phoneNumber }}
+            </a>
+            } @else {
+            <span>Not provided</span>
+            }
+          </div>
+        </div>
+        
+        <div class="detail-item">
+          <label class="detail-label">Address</label>
+          <div class="detail-value">{{ contact.address || 'Not provided' }}</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Additional Information -->
+    <div class="details-section">
+      <h3 class="section-title">
+        <mat-icon>info</mat-icon>
+        Additional Information
+      </h3>
+      
+      <div class="details-grid">
+        <div class="detail-item">
+          <label class="detail-label">Notes</label>
+          <div class="detail-value notes-value">{{ contact.notes || 'No notes available' }}</div>
+        </div>
+        
+        <div class="detail-item">
+          <label class="detail-label">Created</label>
+          <div class="detail-value">{{ formatDate(contact.createdAt) }}</div>
+        </div>
+        
+        <div class="detail-item">
+          <label class="detail-label">Last Updated</label>
+          <div class="detail-value">{{ formatDate(contact.updatedAt) }}</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Actions -->
+  <div class="actions">
+    <button mat-button (click)="onBack()" class="back-button">
+      <mat-icon>arrow_back</mat-icon>
+      Back to Contacts
+    </button>
+    
+    @if (contact) {
+    <button mat-button (click)="onToggleStar()" 
+            [class.starred]="contact.isStarred"
+            class="star-button">
+      <mat-icon>{{ contact.isStarred ? 'star' : 'star_border' }}</mat-icon>
+      {{ contact.isStarred ? 'Unstar' : 'Star' }}
+    </button>
+    
+    <button mat-button (click)="onToggleBlock()" 
+            [class.blocked]="contact.isBlocked"
+            class="block-button">
+      <mat-icon>{{ contact.isBlocked ? 'lock_open' : 'block' }}</mat-icon>
+      {{ contact.isBlocked ? 'Unblock' : 'Block' }}
+    </button>
+    
+    <button mat-raised-button color="primary" (click)="onEdit()" class="edit-button">
+      <mat-icon>edit</mat-icon>
+      Edit Contact
+    </button>
+    }
+  </div>
+  }
+
+  @if (!contact && !isLoading) {
+  <div class="loading-overlay">
+    <mat-icon>person_off</mat-icon>
+    <p>Contact not found</p>
+  </div>
+  }
 </div>

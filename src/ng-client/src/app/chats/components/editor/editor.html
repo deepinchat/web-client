@@ -2,7 +2,6 @@
 <form [formGroup]="form" class="chat-editor-form">
     <!-- Chat Avatar Section -->
     <div class="chat-section avatar-section">
-        <h3 class="section-title">Chat Avatar</h3>
         <div class="avatar-container">
             <deepin-avatar 
                 [fileUrl]="formControlValue('avatarFileId') | fileUrl | async"
