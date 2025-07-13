@@ -8,7 +8,6 @@
 </mat-toolbar>
 <mat-list class="thin-scrollbar">
     @for (chat of chats; track $index) {
-    <deepin-chat-list-item [isActive]="openedChatId === chat.chat.id" [item]="chat"
-        (click)="onChat(chat)"></deepin-chat-list-item>
+    <chat-list-item [isActive]="openedChatId === chat.chat.id" [item]="chat" (click)="onChat(chat)"></chat-list-item>
     }
 </mat-list>

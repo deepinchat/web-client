@@ -1,12 +1,12 @@
 import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
-import { ChatListComponent } from '../shared/components/chats/chat-list/chat-list.component';
+import { ChatList } from './components/list/list';
 
 @Component({
   selector: 'deepin-chats',
   imports: [
     RouterOutlet,
-    ChatListComponent
+    ChatList
   ],
   templateUrl: './chats.component.html',
   styleUrl: './chats.component.scss'

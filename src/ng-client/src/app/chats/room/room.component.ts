@@ -10,9 +10,9 @@ import { AvatarComponent } from '../../shared/components/avatar/avatar.component
 import { MessageEditorComponent } from '../../shared/components/messages/editor/editor.component';
 import { MessaageListComponent } from '../../shared/components/messages/list/list.component';
 import { MatDialog } from '@angular/material/dialog';
-import { ChatEditorComponent } from '../../shared/components/chats/chat-editor/chat-editor.component';
 import { AsyncPipe } from '@angular/common';
 import { FileUrlPipe } from '../../shared/pipes/file-url.pipe';
+import { ChatEditorDialog } from '../components/editor-dialog/editor-dialog';
 
 @Component({
   selector: 'app-room',
@@ -69,7 +69,7 @@ export class RoomComponent implements OnInit, OnDestroy {
     if (!this.chat) {
       return;
     }
-    this.dialog.open(ChatEditorComponent, {
+    this.dialog.open(ChatEditorDialog, {
       data: { type: this.chat.type, chat: this.chat },
       minWidth: '400px',
       maxWidth: '480px',

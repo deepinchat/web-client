@@ -1,17 +1,19 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import { MatList } from '@angular/material/list';
-import { ChatListItemComponent } from '../chat-list-item/chat-list-item.component';
-import { Chat, ChatSummary } from '../../../../core/models/chat.model';
-import { ChatService } from '../../../../core/services/chat.service';
-import { Subscription } from 'rxjs';
-import { ChatHubService } from '../../../../core/services/chat-hub.service';
-import { MatToolbar } from '@angular/material/toolbar';
-import { MatInput, MatSuffix } from '@angular/material/input';
-import { MatFormFieldModule } from '@angular/material/form-field';
+import { Component } from '@angular/core';
+import { MatSuffix, MatFormFieldModule } from '@angular/material/form-field';
 import { MatIcon } from '@angular/material/icon';
+import { MatInput } from '@angular/material/input';
+import { MatList } from '@angular/material/list';
+import { MatToolbar } from '@angular/material/toolbar';
+import { Subscription } from 'rxjs';
+import { ChatSummary } from '../../../core/models/chat.model';
+import { ChatHubService } from '../../../core/services/chat-hub.service';
+import { ChatService } from '../../../core/services/chat.service';
+import { ChatListItem } from '../list-item/list-item';
 
 @Component({
-  selector: 'deepin-chat-list',
+  selector: 'chat-list',
+  templateUrl: './list.html',
+  styleUrl: './list.scss',
   imports: [
     MatList,
     MatInput,
@@ -19,12 +21,11 @@ import { MatIcon } from '@angular/material/icon';
     MatToolbar,
     MatFormFieldModule,
     MatIcon,
-    ChatListItemComponent
+    ChatListItem
   ],
-  templateUrl: './chat-list.component.html',
-  styleUrl: './chat-list.component.scss'
 })
-export class ChatListComponent implements OnInit, OnDestroy {
+export class ChatList {
+
   chats: ChatSummary[] = [];
   isLoading = false;
   openedChatId: string = '';
