@@ -11,6 +11,8 @@ import { MessageEditorComponent } from '../../shared/components/messages/editor/
 import { MessaageListComponent } from '../../shared/components/messages/list/list.component';
 import { MatDialog } from '@angular/material/dialog';
 import { ChatEditorComponent } from '../../shared/components/chats/chat-editor/chat-editor.component';
+import { AsyncPipe } from '@angular/common';
+import { FileUrlPipe } from '../../shared/pipes/file-url.pipe';
 
 @Component({
   selector: 'app-room',
@@ -23,7 +25,9 @@ import { ChatEditorComponent } from '../../shared/components/chats/chat-editor/c
     MatIcon,
     MessageEditorComponent,
     MessaageListComponent,
-    AvatarComponent
+    AvatarComponent,
+    AsyncPipe,
+    FileUrlPipe
   ],
   templateUrl: './room.component.html',
   styleUrl: './room.component.scss'

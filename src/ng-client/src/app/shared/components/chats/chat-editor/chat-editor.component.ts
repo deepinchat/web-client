@@ -1,4 +1,4 @@
-import { NgIf, DOCUMENT } from '@angular/common';
+import { NgIf, DOCUMENT, AsyncPipe } from '@angular/common';
 import { Component, Inject } from '@angular/core';
 import { ReactiveFormsModule, FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { MatButton } from '@angular/material/button';
@@ -14,11 +14,12 @@ import { ChatService } from '../../../../core/services/chat.service';
 import { FileUploaderComponent } from '../../file-uploader/file-uploader.component';
 import { FileModel } from '../../../../core/models/file.model';
 import { AvatarComponent } from "../../avatar/avatar.component";
+import { FileUrlPipe } from '../../../pipes/file-url.pipe';
 
 @Component({
   selector: 'app-chat-editor',
   imports: [
-    NgIf,
+    AsyncPipe,
     ReactiveFormsModule,
     MatFormField,
     MatLabel,
@@ -31,7 +32,8 @@ import { AvatarComponent } from "../../avatar/avatar.component";
     MatDialogActions,
     MatInputModule,
     FileUploaderComponent,
-    AvatarComponent
+    AvatarComponent,
+    FileUrlPipe
   ],
   templateUrl: './chat-editor.component.html',
   styleUrl: './chat-editor.component.scss'

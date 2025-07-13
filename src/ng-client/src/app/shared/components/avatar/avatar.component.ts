@@ -20,13 +20,12 @@ const COLORS = [
   styleUrl: './avatar.component.scss'
 })
 export class AvatarComponent implements OnInit, OnChanges {
-  @Input() fileId?: string | null = null;
+  @Input() fileUrl?: string | null = null;
   @Input() displayName?: string = '';
-  @Input() size: 'small' | 'default' | 'large' = 'default';
+  @Input() size: 'sm' | 'md' | 'lg' | 'xl' = 'md';
   @Input() shape: 'circle' | 'rounded' | 'square' = 'circle';
   backgroundColor: string = '';
   initials: string = '';
-  imageUrl = '';
   constructor(
     private fileService: FileService
   ) { }
@@ -36,16 +35,10 @@ export class AvatarComponent implements OnInit, OnChanges {
       this.updateInitials();
       this.updateBackgroundColor();
     }
-    if (changes["fileId"] && this.fileId) {
-      this.loadImage(this.fileId);
-    }
   }
   ngOnInit() {
     this.updateInitials();
     this.updateBackgroundColor();
-    if (this.fileId) {
-      this.loadImage(this.fileId);
-    }
   }
 
   private updateInitials(): void {
@@ -68,14 +61,5 @@ export class AvatarComponent implements OnInit, OnChanges {
 
     const colorIndex = sum % COLORS.length;
     this.backgroundColor = COLORS[colorIndex];
-  }
-
-  loadImage(id: string) {
-    this.fileService.getLocalDownloadUrl(id).then(url => {
-      this.imageUrl = url || '';
-    }).catch(error => {
-      console.error('Error loading image:', error);
-      this.imageUrl = ''; // Reset image URL on error
-    });
   }
 }

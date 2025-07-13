@@ -2,9 +2,10 @@
   {{isNew ? 'Create group' : 'Edit group'}}
 </h2>
 <mat-dialog-content>
-  <form *ngIf="form" [formGroup]="form">
+  @if(form){
+  <form [formGroup]="form">
     <div class="chat-avatar">
-      <deepin-avatar [fileId]="formControlValue('avatarFileId')"
+      <deepin-avatar [fileUrl]="formControlValue('avatarFileId') | fileUrl | async"
         [displayName]="formControlValue('name')"></deepin-avatar>
 
       <deepin-file-uploader (fileUploaded)="onFileUploaded($event)" [multiple]="false"
@@ -36,13 +37,16 @@
       Public Chat
     </mat-checkbox>
   </form>
+  }
 </mat-dialog-content>
 <mat-dialog-actions>
   <button type="button" [disabled]="isLoading" mat-button (click)="onCancel()">Cancel</button>
   <button type="button" [disabled]="form?.invalid || isLoading" mat-flat-button (click)="onSubmit()">
-    <mat-icon *ngIf="isLoading">
+    @if(isLoading){
+    <mat-icon>
       <mat-spinner diameter="16"></mat-spinner>
     </mat-icon>
+    }
     {{ isNew ? 'Create' : 'Save'}}
   </button>
 </mat-dialog-actions>

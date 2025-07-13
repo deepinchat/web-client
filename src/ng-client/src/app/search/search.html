@@ -23,7 +23,7 @@
                         @if(user.pictureId){
                         <img matListItemAvatar [src]="user.pictureId | fileUrl | async" />
                         }@else {
-                        <mat-icon matListIcon>
+                        <mat-icon matListItemAvatar>
                             person
                         </mat-icon>
                         }
@@ -50,8 +50,8 @@
             <div class="tab-content">
                 <mat-list *ngIf="chats.length > 0">
                     <mat-list-item *ngFor="let chat of chats" (click)="onChatClick(chat)" class="clickable-item">
-                        <deepin-avatar matListItemAvatar [displayName]="chat.name" [fileId]="chat.avatarFileId"
-                            size="small"></deepin-avatar>
+                        <deepin-avatar matListItemAvatar [displayName]="chat.name" [fileUrl]="chat.avatarFileId | fileUrl | async"
+                            size="md"></deepin-avatar>
                         <div matListItemTitle>{{ chat.name }}</div>
                         <div matListItemLine>{{ chat.description }}</div>
                     </mat-list-item>
@@ -72,7 +72,7 @@
                         (click)="onMessageClick(message)">
                         <mat-card-content>
                             <div class="message-header">
-                                <user-avatar [profile]="message.sender" size="small"></user-avatar>
+                                <user-avatar [profile]="message.sender" size="md"></user-avatar>
                                 <div class="message-info">
                                     <span class="sender-name">{{ message.sender.name || message.sender.userName
                                         }}</span>
@@ -98,7 +98,7 @@
             <div class="tab-content">
                 <mat-list *ngIf="bots.length > 0">
                     <mat-list-item *ngFor="let bot of bots" (click)="onBotClick(bot)" class="clickable-item">
-                        <user-avatar matListItemAvatar [profile]="bot" size="small"></user-avatar>
+                        <user-avatar matListItemAvatar [profile]="bot" size="md"></user-avatar>
                         <div matListItemTitle>{{ bot.name || bot.userName }}</div>
                         <div matListItemLine>{{ bot.bio }}</div>
                         <mat-icon matListItemIcon>smart_toy</mat-icon>

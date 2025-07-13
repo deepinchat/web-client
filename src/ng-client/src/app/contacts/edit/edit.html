@@ -13,21 +13,23 @@
     <mat-card-content>
       @if(form){
       <form [formGroup]="form" class="contact-edit-form" (ngSubmit)="onSubmit()">
-        
+
         <!-- Basic Information -->
         <div class="form-section">
           <h3 class="section-title">
             <mat-icon>person</mat-icon>
             Basic Information
           </h3>
-          
+
           <mat-form-field appearance="outline" class="full-width">
             <mat-label>Display Name</mat-label>
             <input matInput formControlName="name" placeholder="Enter display name" required>
             <mat-icon matSuffix>badge</mat-icon>
-            <mat-error *ngIf="form?.get('name')?.invalid && form?.get('name')?.touched">
+            @if(form && form.get('name')?.invalid && form.get('name')?.touched){
+            <mat-error>
               {{ getErrorMessage('name') }}
             </mat-error>
+            }
           </mat-form-field>
 
           <div class="name-row">
@@ -48,14 +50,16 @@
             <mat-icon>contact_mail</mat-icon>
             Contact Information
           </h3>
-          
+
           <mat-form-field appearance="outline" class="full-width">
             <mat-label>Email Address</mat-label>
             <input matInput type="email" formControlName="email" placeholder="example@email.com">
             <mat-icon matSuffix>email</mat-icon>
-            <mat-error *ngIf="form?.get('email')?.invalid && form?.get('email')?.touched">
+            @if(form && form.get('email')?.invalid && form.get('email')?.touched){
+            <mat-error>
               {{ getErrorMessage('email') }}
             </mat-error>
+            }
           </mat-form-field>
 
           <mat-form-field appearance="outline" class="full-width">
@@ -71,7 +75,7 @@
             <mat-icon>calendar_today</mat-icon>
             Personal Information
           </h3>
-          
+
           <mat-form-field appearance="outline" class="full-width">
             <mat-label>Birthday</mat-label>
             <input matInput [matDatepicker]="picker" formControlName="birthday" readonly>
@@ -92,7 +96,7 @@
             <mat-icon>location_on</mat-icon>
             Address Information
           </h3>
-          
+
           <mat-form-field appearance="outline" class="full-width">
             <mat-label>Address</mat-label>
             <textarea matInput formControlName="address" rows="3" placeholder="Enter detailed address"></textarea>
@@ -106,7 +110,7 @@
             <mat-icon>note</mat-icon>
             Notes
           </h3>
-          
+
           <mat-form-field appearance="outline" class="full-width">
             <mat-label>Notes</mat-label>
             <textarea matInput formControlName="notes" rows="4" placeholder="Add notes..."></textarea>
@@ -122,9 +126,13 @@
         <mat-icon>cancel</mat-icon>
         Cancel
       </button>
-      <button mat-raised-button color="primary" type="submit" [disabled]="!form || form.invalid || isSaving" (click)="onSubmit()">
-        <mat-spinner *ngIf="isSaving" diameter="20" class="button-spinner"></mat-spinner>
-        <mat-icon *ngIf="!isSaving">save</mat-icon>
+      <button mat-raised-button color="primary" type="submit" [disabled]="!form || form.invalid || isSaving"
+        (click)="onSubmit()">
+        @if(isSaving){
+        <mat-spinner diameter="20" class="button-spinner"></mat-spinner>
+        }@else {
+        <mat-icon>save</mat-icon>
+        }
         {{ isSaving ? 'Saving...' : 'Save' }}
       </button>
     </mat-card-actions>

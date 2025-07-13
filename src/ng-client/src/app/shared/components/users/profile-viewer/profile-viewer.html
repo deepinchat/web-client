@@ -4,13 +4,13 @@
         <mat-card-title-group>
             <div class="profile-avatar">
                 @if (profile.pictureId) {
-                <img mat-card-md-image [src]="profile.pictureId | fileUrl | async" alt="Profile picture" />
+                <img mat-card-xl-image [src]="profile.pictureId | fileUrl | async" alt="Profile picture" />
                 }
                 @else if(profile.pictureUrl) {
-                <img mat-card-md-image [src]="profile.pictureUrl" alt="Profile picture" />
+                <img mat-card-xl-image [src]="profile.pictureUrl" alt="Profile picture" />
                 }
                 @else {
-                <mat-icon mat-card-md-image>person</mat-icon>
+                <mat-icon mat-card-xl-image>person</mat-icon>
                 }
             </div>
             <div class="profile-info">

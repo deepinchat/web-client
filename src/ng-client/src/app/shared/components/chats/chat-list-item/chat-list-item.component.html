@@ -1,13 +1,16 @@
 <a mat-list-item [routerLink]="[item.chat.id]" [activated]="isActive">
-    <deepin-avatar matListItemAvatar [fileId]="item.chat.avatarFileId" [displayName]="item.chat.name" />
+    <deepin-avatar matListItemAvatar [fileUrl]="item.chat.avatarFileId | fileUrl | async"
+        [displayName]="item.chat.name" />
     <h3 matListItemTitle>
         <span>{{item.chat.name}}</span>
         <span *ngIf="item.unreadCount" [matBadge]="item.unreadCount" matBadgeOverlap="false"></span>
     </h3>
-    <p matListItemLine *ngIf="item.lastMessage">
+    @if(item.lastMessage){
+    <p matListItemLine>
         <span>{{ item.lastMessage.sender.name }} - </span>
         <span>{{ item.lastMessage.content | subString:32 }} </span>
     </p>
+    }
     <small matListItemMeta>
         {{item.chat.updatedAt | date: 'short'}}
     </small>

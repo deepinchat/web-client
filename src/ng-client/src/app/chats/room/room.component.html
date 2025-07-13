@@ -1,7 +1,7 @@
 @if (chat) {
 <mat-toolbar>
     <div class="chat-header-left">
-        <deepin-avatar [fileId]="chat.avatarFileId" [displayName]="chat.name" />
+        <deepin-avatar [fileUrl]="chat.avatarFileId | fileUrl | async" [displayName]="chat.name" />
         <span>{{ chat.name }}</span>
     </div>
     <div class="chat-header-right">
