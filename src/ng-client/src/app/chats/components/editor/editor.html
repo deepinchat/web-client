@@ -1,36 +1,71 @@
-@if(form){
-<form [formGroup]="form">
-    <div class="chat-avatar">
-        <deepin-avatar [fileUrl]="formControlValue('avatarFileId') | fileUrl | async"
-            [displayName]="formControlValue('name')"></deepin-avatar>
-
-        <deepin-file-uploader (fileUploaded)="onFileUploaded($event)" [multiple]="false"
-            [accept]="'image/*'"></deepin-file-uploader>
+@if(form) {
+<form [formGroup]="form" class="chat-editor-form">
+    <!-- Chat Avatar Section -->
+    <div class="chat-section avatar-section">
+        <h3 class="section-title">Chat Avatar</h3>
+        <div class="avatar-container">
+            <deepin-avatar 
+                [fileUrl]="formControlValue('avatarFileId') | fileUrl | async"
+                [displayName]="formControlValue('name')"
+                [size]="'xl'">
+            </deepin-avatar>
+            <deepin-file-uploader 
+                (fileUploaded)="onFileUploaded($event)" 
+                [multiple]="false"
+                [accept]="'image/*'"
+                class="avatar-uploader">
+            </deepin-file-uploader>
+        </div>
     </div>
-    <mat-form-field appearance="outline">
-        <mat-label>Name</mat-label>
-        <input matInput formControlName="name">
-    </mat-form-field>
-    <mat-form-field appearance="outline">
-        <mat-label>Link</mat-label>
-        <input matInput formControlName="userName">  
-        <mat-hint>https://deepin.me/{{formControlValue('userName')}}</mat-hint>
-        @if (formControlErrors('userName')?.['required']) {
-        <mat-error>Link cannot be null.</mat-error>
-        }
-        @if (formControlErrors('userName')?.['minlength'] || formControlErrors('userName')?.['maxlength']) {
-        <mat-error>Link length must be 4-32 characters or numbers or underscores.</mat-error>
-        }
-        @if (formControlErrors('userName')?.['duplicated']) {
-        <mat-error>Link already exists.</mat-error>
-        }
-    </mat-form-field>
-    <mat-form-field appearance="outline">
-        <mat-label>Description</mat-label>
-        <textarea matInput formControlName="description"></textarea>
-    </mat-form-field>
-    <mat-checkbox formControlName="isPublic">
-        Public Chat
-    </mat-checkbox>
+
+    <!-- Basic Information Section -->
+    <div class="chat-section">
+        <h3 class="section-title">Basic Information</h3>
+        <mat-form-field appearance="outline">
+            <mat-label>Chat Name</mat-label>
+            <input matInput formControlName="name" placeholder="Enter chat name">
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+            <mat-label>Chat Link</mat-label>
+            <input matInput formControlName="userName" placeholder="chat-link">  
+            <mat-hint>https://deepin.me/{{formControlValue('userName') || 'chat-link'}}</mat-hint>
+            @if (formControlErrors('userName')?.['required']) {
+            <mat-error>Link cannot be empty.</mat-error>
+            }
+            @if (formControlErrors('userName')?.['minlength'] || formControlErrors('userName')?.['maxlength']) {
+            <mat-error>Link must be 4-32 characters, numbers, or underscores only.</mat-error>
+            }
+            @if (formControlErrors('userName')?.['duplicated']) {
+            <mat-error>This link is already taken.</mat-error>
+            }
+        </mat-form-field>
+    </div>
+
+    <!-- About Section -->
+    <div class="chat-section">
+        <h3 class="section-title">About</h3>
+        <mat-form-field appearance="outline">
+            <mat-label>Description</mat-label>
+            <textarea 
+                matInput 
+                formControlName="description" 
+                rows="4"
+                placeholder="Describe what this chat is about...">
+            </textarea>
+        </mat-form-field>
+    </div>
+
+    <!-- Settings Section -->
+    <div class="chat-section">
+        <h3 class="section-title">Privacy Settings</h3>
+        <div class="settings-container">
+            <mat-checkbox formControlName="isPublic" class="public-checkbox">
+                <div class="checkbox-content">
+                    <div class="checkbox-title">Public Chat</div>
+                    <div class="checkbox-description">Allow anyone to find and join this chat</div>
+                </div>
+            </mat-checkbox>
+        </div>
+    </div>
 </form>
 }
