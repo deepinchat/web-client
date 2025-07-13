@@ -1,36 +1,35 @@
 import { Component } from '@angular/core';
-import { MatSuffix, MatFormFieldModule } from '@angular/material/form-field';
-import { MatIcon } from '@angular/material/icon';
-import { MatInput } from '@angular/material/input';
+import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatList } from '@angular/material/list';
-import { MatToolbar } from '@angular/material/toolbar';
 import { Subscription } from 'rxjs';
 import { ChatSummary } from '../../../core/models/chat.model';
 import { ChatHubService } from '../../../core/services/chat-hub.service';
 import { ChatService } from '../../../core/services/chat.service';
 import { ChatListItem } from '../list-item/list-item';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { FormControl, ReactiveFormsModule } from '@angular/forms';
 
 @Component({
   selector: 'chat-list',
   templateUrl: './list.html',
   styleUrl: './list.scss',
   imports: [
+    ReactiveFormsModule,
     MatList,
-    MatInput,
-    MatSuffix,
-    MatToolbar,
     MatFormFieldModule,
-    MatIcon,
+    MatToolbarModule,
     ChatListItem
   ],
 })
 export class ChatList {
-
   chats: ChatSummary[] = [];
   isLoading = false;
   openedChatId: string = '';
   subscription = new Subscription();
-  constructor(private chatService: ChatService, private chatHubService: ChatHubService) {
+  searchControl = new FormControl('');
+  constructor(
+    private chatService: ChatService,
+    private chatHubService: ChatHubService) {
     this.subscription.add(
       this.chatService.chat.subscribe((chat) => {
         this.openedChatId = chat?.id || '';

@@ -8,6 +8,7 @@ import { MatIcon } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { AvatarComponent } from '../../../shared/components/avatar/avatar.component';
 
 @Component({
   selector: 'contact-list-item',
@@ -24,7 +25,8 @@ import { MatTooltipModule } from '@angular/material/tooltip';
     MatTooltipModule,
     FileUrlPipe,
     AsyncPipe,
-    MatIcon
+    MatIcon,
+    AvatarComponent
   ],
   templateUrl: './list-item.html',
   styleUrl: './list-item.scss'

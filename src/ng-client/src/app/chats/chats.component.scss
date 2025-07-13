@@ -9,12 +9,20 @@
         overflow-y: auto;
     }
 
-    deepin-chat-list {
-        min-width: 4rem;
+    .chat-list-container {
         width: 20rem;
         max-width: 50vw;
         resize: horizontal;
         overflow-y: auto;
         border-right: 1px solid var(--mat-sys-outline-variant);
+    }
+
+    mat-toolbar {
+        border-bottom: 1px solid var(--mat-sys-outline-variant);
+    }
+
+    .search-field {
+        width: 100%;
+        margin: 0;
     }
 }

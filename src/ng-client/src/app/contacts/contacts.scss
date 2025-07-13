@@ -10,7 +10,6 @@
     }
 
     .contact-list-container {
-        min-width: 4rem;
         width: 20rem;
         max-width: 50vw;
         resize: horizontal;
@@ -18,12 +17,10 @@
         border-right: 1px solid var(--mat-sys-outline-variant);
     }
 
-    // 让Material Design处理toolbar样式
     mat-toolbar {
         border-bottom: 1px solid var(--mat-sys-outline-variant);
     }
 
-    // 搜索框布局
     .search-field {
         width: 100%;
         margin: 0;

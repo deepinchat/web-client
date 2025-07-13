@@ -1,17 +1,27 @@
 <a mat-list-item [routerLink]="[item.chat.id]" [activated]="isActive">
-    <deepin-avatar matListItemAvatar [fileUrl]="item.chat.avatarFileId | fileUrl | async"
-        [displayName]="item.chat.name" />
-    <h3 matListItemTitle>
-        <span>{{item.chat.name}}</span>
-        <span *ngIf="item.unreadCount" [matBadge]="item.unreadCount" matBadgeOverlap="false"></span>
-    </h3>
-    @if(item.lastMessage){
-    <p matListItemLine>
-        <span>{{ item.lastMessage.sender.name }} - </span>
-        <span>{{ item.lastMessage.content | subString:32 }} </span>
-    </p>
+    @if(item.chat.avatarFileId){
+    <img matListItemAvatar [src]="item.chat.avatarFileId | fileUrl | async" [alt]="item.chat.name" />
+    } @else {
+    <deepin-avatar matListItemAvatar [displayName]="item.chat.name" />
     }
-    <small matListItemMeta>
-        {{item.chat.updatedAt | date: 'short'}}
-    </small>
+    <h3 matListItemTitle>
+        {{item.chat.name}}
+    </h3>
+    @if(item.lastMessage) {
+    <div matListItemLine>
+        <span>
+            {{item.lastMessage.sender.name}}
+        </span>
+        <small>
+            {{item.lastMessage.content | subString:30}}
+        </small>
+    </div>
+    }
+
+    <div matListItemMeta>
+        <small>{{item.chat.updatedAt | date: 'short'}}</small>
+        @if(item.unreadCount){
+        <span [matBadge]="item.unreadCount" matBadgeOverlap="false"></span>
+        }
+    </div>
 </a>

@@ -1,58 +1,29 @@
-<div class="contacts-list-wrapper">
-  <!-- Contact List Content -->
-  <div class="list-content">
-    @if (isLoading) {
-      <div class="loading-container">
-        <mat-spinner diameter="40"></mat-spinner>
-        <p>Loading contacts...</p>
-      </div>
-    } @else if (result.items && result.items.length > 0) {
-      <div class="contacts-content">
-        <mat-list class="contacts-list thin-scrollbar">
-          @for (item of result.items; track item.id) {
-            <contact-list-item [contact]="item"></contact-list-item>
-            @if (!$last) {
-              <mat-divider></mat-divider>
-            }
-          }
-        </mat-list>
-      </div>
-      
-      <!-- Pagination -->
-      @if (result.totalCount > query.limit) {
-        <div class="pagination-wrapper">
-          <mat-paginator
-            [length]="result.totalCount"
-            [pageSize]="query.limit"
-            [pageIndex]="query.offset / query.limit"
-            [pageSizeOptions]="[10, 20, 50]"
-            (page)="onPageChange($event)"
-            showFirstLastButtons>
-          </mat-paginator>
-        </div>
-      }
+@if (result.items && result.items.length > 0) {
+<mat-list class="thin-scrollbar">
+  @for (item of result.items; track item.id) {
+  <contact-list-item [contact]="item"></contact-list-item>
+  }
+</mat-list>
+}@else {
+<div class="empty-state">
+  <div class="empty-content">
+    @if (searchTerm) {
+    <mat-icon class="empty-icon">search_off</mat-icon>
+    <h4>No contacts found</h4>
+    <p>No contacts match your search criteria</p>
+    <button mat-button (click)="clearSearch()" class="clear-search-button">
+      <mat-icon>clear</mat-icon>
+      Clear Search
+    </button>
     } @else {
-      <div class="empty-state">
-        <div class="empty-content">
-          @if (searchTerm) {
-            <mat-icon class="empty-icon">search_off</mat-icon>
-            <h4>No contacts found</h4>
-            <p>No contacts match your search criteria</p>
-            <button mat-button (click)="clearSearch()" class="clear-search-button">
-              <mat-icon>clear</mat-icon>
-              Clear Search
-            </button>
-          } @else {
-            <mat-icon class="empty-icon">person_add</mat-icon>
-            <h4>No contacts yet</h4>
-            <p>Add your first contact to get started</p>
-            <button mat-raised-button color="primary" (click)="onAddContact()" class="add-first-button">
-              <mat-icon>person_add</mat-icon>
-              Add Contact
-            </button>
-          }
-        </div>
-      </div>
+    <mat-icon class="empty-icon">person_add</mat-icon>
+    <h4>No contacts yet</h4>
+    <p>Add your first contact to get started</p>
+    <button mat-raised-button color="primary" (click)="onAddContact()" class="add-first-button">
+      <mat-icon>person_add</mat-icon>
+      Add Contact
+    </button>
     }
   </div>
 </div>
+}
