@@ -1,16 +1,40 @@
 @if(contact){
-<a mat-list-item [routerLink]="[contact.id]">
-    @if(contact.profile && contact.profile.pictureId){
-    <img matListItemAvatar [src]="contact.profile.pictureId | fileUrl | async" alt="{{contact.name}}" class="avatar" />
-    }
-    @else{
-    <mat-icon matListItemAvatar class="avatar-icon">person</mat-icon>
-    }
-    <h3 matListItemTitle>
-        <span>{{contact.name}}</span>
-    </h3>
-    <small matListItemMeta>
-        Added on {{contact.createdAt | date }}
-    </small>
-</a>
+  <a mat-list-item [routerLink]="[contact.id]" class="contact-item">
+    <!-- Avatar Section - 使用Material标准结构 -->
+    <div matListItemAvatar class="avatar-container">
+      @if(contact.profile && contact.profile.pictureId){
+        <img 
+          [src]="contact.profile.pictureId | fileUrl | async" 
+          [alt]="getDisplayName()" 
+          class="contact-avatar"
+        />
+      } @else {
+        <div class="avatar-placeholder">
+          {{ getInitials() }}
+        </div>
+      }
+      
+      <!-- 状态指示器 -->
+      @if (contact.isStarred) {
+        <mat-icon class="star-indicator" matTooltip="Starred">star</mat-icon>
+      }
+      @if (contact.isBlocked) {
+        <mat-icon class="blocked-indicator" matTooltip="Blocked">block</mat-icon>
+      }
+    </div>
+
+    <!-- 内容区域 - 使用Material标准结构 -->
+    <div matListItemTitle class="contact-content">
+      <span class="contact-name">{{ getDisplayName() }}</span>
+      @if (getSubtitle()) {
+        <div matListItemLine class="contact-subtitle">{{ getSubtitle() }}</div>
+      }
+    </div>
+
+    <!-- 元信息区域 - 使用Material标准结构 -->
+    <div matListItemMeta class="contact-meta">
+      <span class="meta-date">{{ contact.createdAt | date:'M/d/yy' }}</span>
+      <mat-icon class="chevron-icon">chevron_right</mat-icon>
+    </div>
+  </a>
 }

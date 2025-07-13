@@ -18,15 +18,14 @@
         border-right: 1px solid var(--mat-sys-outline-variant);
     }
 
+    // 让Material Design处理toolbar样式
     mat-toolbar {
         border-bottom: 1px solid var(--mat-sys-outline-variant);
     }
 
+    // 搜索框布局
     .search-field {
         width: 100%;
-        display: flex;
-        justify-content: center;
-        align-items: center;
         margin: 0;
     }
 }

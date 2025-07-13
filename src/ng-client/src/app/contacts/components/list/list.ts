@@ -4,11 +4,35 @@ import { PagedResult } from '../../../core/models/pagination.model';
 import { ContactService } from '../../../core/services/contact.service';
 import { MatListModule } from "@angular/material/list";
 import { ContactListItem } from '../list-item/list-item';
+import { CommonModule } from '@angular/common';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatCardModule } from '@angular/material/card';
+import { MatPaginatorModule, PageEvent } from '@angular/material/paginator';
+import { MatDividerModule } from '@angular/material/divider';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { FormsModule } from '@angular/forms';
+import { Router } from '@angular/router';
+import { debounceTime, distinctUntilChanged, Subject } from 'rxjs';
 
 @Component({
   selector: 'contact-list',
   imports: [
+    CommonModule,
+    FormsModule,
     MatListModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatIconModule,
+    MatButtonModule,
+    MatProgressSpinnerModule,
+    MatCardModule,
+    MatPaginatorModule,
+    MatDividerModule,
+    MatTooltipModule,
     ContactListItem
   ],
   templateUrl: './list.html',
@@ -22,10 +46,23 @@ export class ContactList implements OnInit {
   }
   result: PagedResult<ContactModel> = new PagedResult<ContactModel>();
   isLoading = false;
+  searchTerm = '';
+  private searchSubject = new Subject<string>();
 
   constructor(
-    private contactService: ContactService
-  ) { }
+    private contactService: ContactService,
+    private router: Router
+  ) {
+    // 搜索防抖处理
+    this.searchSubject.pipe(
+      debounceTime(300),
+      distinctUntilChanged()
+    ).subscribe(searchTerm => {
+      this.query.search = searchTerm;
+      this.query.offset = 0; // 重置到第一页
+      this.loadContacts();
+    });
+  }
 
   ngOnInit() {
     this.loadContacts();
@@ -44,5 +81,29 @@ export class ContactList implements OnInit {
         this.isLoading = false;
       }
     });
+  }
+
+  onSearchChange(searchTerm: string) {
+    this.searchTerm = searchTerm;
+    this.searchSubject.next(searchTerm);
+  }
+
+  clearSearch() {
+    this.searchTerm = '';
+    this.onSearchChange('');
+  }
+
+  onPageChange(event: PageEvent) {
+    this.query.offset = event.pageIndex * event.pageSize;
+    this.query.limit = event.pageSize;
+    this.loadContacts();
+  }
+
+  onAddContact() {
+    this.router.navigate(['/contacts/new']);
+  }
+
+  refresh() {
+    this.loadContacts();
   }
 }

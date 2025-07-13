@@ -1,19 +1,288 @@
 :host {
-    display: flex;
-    flex-direction: column;
-    height: 100vh;
-    padding: 1rem;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  min-height: 100vh;
+  padding: 24px;
+  background-color: var(--mat-app-background-color);
+}
 
-    .contact-edit-form {
-        display: flex;
-        flex-direction: column;
-        gap: .75rem;
-        min-width: 10rem;
-        max-width: 30rem;
+.contact-edit-container {
+  width: 100%;
+  max-width: 800px;
+}
+
+.contact-edit-card {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  border-radius: 12px !important;
+  overflow: hidden;
+  background-color: var(--mat-card-container-color);
+
+  mat-card-header {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 24px;
+    
+    mat-card-title {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 24px;
+      font-weight: 600;
+      margin-bottom: 8px;
+      color: white;
+      
+      mat-icon {
+        font-size: 28px;
+        width: 28px;
+        height: 28px;
+        color: white;
+      }
     }
-    .button-group {
-        display: flex;
-        justify-content: flex-end;
-        gap: .5rem;
+    
+    mat-card-subtitle {
+      color: rgba(255, 255, 255, 0.9);
+      font-size: 16px;
+      margin: 0;
     }
+  }
+
+  mat-card-content {
+    padding: 32px;
+    background-color: var(--mat-card-container-color);
+  }
+}
+
+.contact-edit-form {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.form-section {
+  .section-title {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--mat-card-subtitle-text-color);
+    margin: 0 0 16px 0;
+    padding-bottom: 8px;
+    border-bottom: 2px solid var(--mat-divider-color);
+    
+    mat-icon {
+      color: #667eea;
+      font-size: 20px;
+      width: 20px;
+      height: 20px;
+    }
+  }
+}
+
+.full-width {
+  width: 100%;
+}
+
+.name-row {
+  display: flex;
+  gap: 16px;
+  
+  .half-width {
+    flex: 1;
+  }
+}
+
+// Form field 自定义样式
+mat-form-field {
+  &.mat-mdc-form-field {
+    .mat-mdc-text-field-wrapper {
+      border-radius: 8px;
+      background-color: var(--mat-form-field-container-color);
+    }
+    
+    .mat-mdc-form-field-focus-overlay {
+      border-radius: 8px;
+    }
+
+    .mat-mdc-form-field-label {
+      color: var(--mat-form-field-label-text-color);
+    }
+
+    input, textarea {
+      color: var(--mat-form-field-input-text-color);
+      caret-color: var(--mat-form-field-input-text-color);
+    }
+
+    .mat-mdc-form-field-icon-suffix {
+      color: var(--mat-form-field-outlined-label-text-color);
+    }
+  }
+  
+  // 输入框聚焦时的样式
+  &.mat-focused {
+    .mat-mdc-text-field-wrapper {
+      box-shadow: 0 0 0 2px rgba(102, 126, 234, 0.2);
+    }
+  }
+  
+  // 错误状态样式
+  &.mat-form-field-invalid {
+    .mat-mdc-text-field-wrapper {
+      box-shadow: 0 0 0 2px rgba(244, 67, 54, 0.2);
+    }
+  }
+}
+
+// 按钮区域
+.card-actions {
+  padding: 24px 32px;
+  background-color: var(--mat-card-actions-container-color);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-top: 1px solid var(--mat-divider-color);
+  
+  button {
+    border-radius: 8px;
+    padding: 12px 24px;
+    font-weight: 600;
+    text-transform: none;
+    position: relative;
+    
+    .button-spinner {
+      margin-right: 8px;
+    }
+    
+    &[mat-raised-button] {
+      box-shadow: 0 2px 8px rgba(102, 126, 234, 0.3);
+      
+      &:hover:not(:disabled) {
+        box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+        transform: translateY(-1px);
+      }
+      
+      &:disabled {
+        opacity: 0.6;
+      }
+    }
+    
+    &[mat-button] {
+      &:hover:not(:disabled) {
+        background-color: rgba(102, 126, 234, 0.1);
+      }
+    }
+    
+    mat-icon:not(.button-spinner) {
+      margin-right: 8px;
+    }
+  }
+}
+
+// 表单验证样式
+.mat-mdc-form-field {
+  &.mat-form-field-invalid {
+    .mat-mdc-text-field-wrapper {
+      border-color: var(--mat-form-field-error-text-color);
+    }
+    
+    .mat-mdc-form-field-focus-overlay {
+      background-color: rgba(244, 67, 54, 0.1);
+    }
+  }
+}
+
+// 错误消息样式
+mat-error {
+  font-size: 12px;
+  color: var(--mat-form-field-error-text-color);
+  margin-top: 4px;
+}
+
+// 加载状态样式
+.loading-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: var(--mat-dialog-container-color);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+// 响应式设计
+@media (max-width: 768px) {
+  :host {
+    padding: 16px;
+    background-color: var(--mat-app-background-color);
+  }
+  
+  .contact-edit-card {
+    mat-card-header {
+      padding: 20px;
+      
+      mat-card-title {
+        font-size: 20px;
+        
+        mat-icon {
+          font-size: 24px;
+          width: 24px;
+          height: 24px;
+        }
+      }
+    }
+    
+    mat-card-content {
+      padding: 24px 20px;
+      background-color: var(--mat-card-container-color);
+    }
+  }
+  
+  .contact-edit-form {
+    gap: 20px;
+  }
+  
+  .name-row {
+    flex-direction: column;
+    gap: 12px;
+  }
+  
+  .card-actions {
+    padding: 20px;
+    flex-direction: column;
+    gap: 12px;
+    background-color: var(--mat-card-actions-container-color);
+    border-top-color: var(--mat-divider-color);
+    
+    button {
+      width: 100%;
+    }
+  }
+}
+
+@media (max-width: 480px) {
+  :host {
+    padding: 12px;
+    background-color: var(--mat-app-background-color);
+  }
+  
+  .contact-edit-card {
+    mat-card-header {
+      padding: 16px;
+    }
+    
+    mat-card-content {
+      padding: 20px 16px;
+      background-color: var(--mat-card-container-color);
+    }
+  }
+  
+  .card-actions {
+    padding: 16px;
+    background-color: var(--mat-card-actions-container-color);
+    border-top-color: var(--mat-divider-color);
+  }
 }

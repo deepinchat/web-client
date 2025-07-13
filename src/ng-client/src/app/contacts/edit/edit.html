@@ -1,57 +1,132 @@
-<h2>
-    Edit Contact
-</h2>
-@if(form){
-<form [formGroup]="form" class="contact-edit-form" (ngSubmit)="onSubmit()">
-    <mat-form-field appearance="outline">
-        <mat-label>Display Name</mat-label>
-        <input matInput formControlName="name">
-    </mat-form-field>
-    <table class="example-full-width" cellspacing="0">
-        <tr>
-            <td>
-                <mat-form-field appearance="outline" class="example-full-width">
-                    <mat-label>First name</mat-label>
-                    <input matInput formControlName="firstName">
-                </mat-form-field>
-            </td>
-            <td><mat-form-field appearance="outline" class="example-full-width">
-                    <mat-label>Last Name</mat-label>
-                    <input matInput formControlName="lastName">
-                </mat-form-field>
-            </td>
-        </tr>
-    </table>
-    <mat-form-field appearance="outline">
-        <mat-label>Email</mat-label>
-        <input matInput formControlName="email">
-    </mat-form-field>
-    <mat-form-field appearance="outline">
-        <mat-label>Phone</mat-label>
-        <input matInput formControlName="phoneNumber">
-    </mat-form-field>
-    <mat-form-field appearance="outline">
-        <mat-label>BirthDate</mat-label>
-        <input matInput [matDatepicker]="picker" formControlName="birthday">
-        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-        <mat-datepicker #picker></mat-datepicker>
-    </mat-form-field>
-    <mat-form-field appearance="outline">
-        <mat-label>Address</mat-label>
-        <textarea matInput formControlName="address"></textarea>
-    </mat-form-field>
-    <mat-form-field appearance="outline">
-        <mat-label>Company</mat-label>
-        <input matInput formControlName="company">
-    </mat-form-field>
-    <mat-form-field appearance="outline">
-        <mat-label>Notes</mat-label>
-        <textarea matInput formControlName="notes"></textarea>
-    </mat-form-field>
-    <div class="button-group">
-        <button matButton="filled" type="submit" [disabled]="form.invalid">
-            Save
-        </button>
-    </div>
-</form>
-}
+<div class="contact-edit-container">
+  <mat-card class="contact-edit-card">
+    <mat-card-header>
+      <mat-card-title>
+        <mat-icon>person_edit</mat-icon>
+        Edit Contact
+      </mat-card-title>
+      <mat-card-subtitle>
+        Modify contact information
+      </mat-card-subtitle>
+    </mat-card-header>
+
+    <mat-card-content>
+      @if(form){
+      <form [formGroup]="form" class="contact-edit-form" (ngSubmit)="onSubmit()">
+        
+        <!-- Basic Information -->
+        <div class="form-section">
+          <h3 class="section-title">
+            <mat-icon>person</mat-icon>
+            Basic Information
+          </h3>
+          
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Display Name</mat-label>
+            <input matInput formControlName="name" placeholder="Enter display name" required>
+            <mat-icon matSuffix>badge</mat-icon>
+            <mat-error *ngIf="form?.get('name')?.invalid && form?.get('name')?.touched">
+              {{ getErrorMessage('name') }}
+            </mat-error>
+          </mat-form-field>
+
+          <div class="name-row">
+            <mat-form-field appearance="outline" class="half-width">
+              <mat-label>First Name</mat-label>
+              <input matInput formControlName="firstName" placeholder="First name">
+            </mat-form-field>
+            <mat-form-field appearance="outline" class="half-width">
+              <mat-label>Last Name</mat-label>
+              <input matInput formControlName="lastName" placeholder="Last name">
+            </mat-form-field>
+          </div>
+        </div>
+
+        <!-- Contact Information -->
+        <div class="form-section">
+          <h3 class="section-title">
+            <mat-icon>contact_mail</mat-icon>
+            Contact Information
+          </h3>
+          
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Email Address</mat-label>
+            <input matInput type="email" formControlName="email" placeholder="example@email.com">
+            <mat-icon matSuffix>email</mat-icon>
+            <mat-error *ngIf="form?.get('email')?.invalid && form?.get('email')?.touched">
+              {{ getErrorMessage('email') }}
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Phone Number</mat-label>
+            <input matInput type="tel" formControlName="phoneNumber" placeholder="+1 (555) 123-4567">
+            <mat-icon matSuffix>phone</mat-icon>
+          </mat-form-field>
+        </div>
+
+        <!-- Personal Information -->
+        <div class="form-section">
+          <h3 class="section-title">
+            <mat-icon>calendar_today</mat-icon>
+            Personal Information
+          </h3>
+          
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Birthday</mat-label>
+            <input matInput [matDatepicker]="picker" formControlName="birthday" readonly>
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Company</mat-label>
+            <input matInput formControlName="company" placeholder="Company name">
+            <mat-icon matSuffix>business</mat-icon>
+          </mat-form-field>
+        </div>
+
+        <!-- Address Information -->
+        <div class="form-section">
+          <h3 class="section-title">
+            <mat-icon>location_on</mat-icon>
+            Address Information
+          </h3>
+          
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Address</mat-label>
+            <textarea matInput formControlName="address" rows="3" placeholder="Enter detailed address"></textarea>
+            <mat-icon matSuffix>place</mat-icon>
+          </mat-form-field>
+        </div>
+
+        <!-- Notes -->
+        <div class="form-section">
+          <h3 class="section-title">
+            <mat-icon>note</mat-icon>
+            Notes
+          </h3>
+          
+          <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Notes</mat-label>
+            <textarea matInput formControlName="notes" rows="4" placeholder="Add notes..."></textarea>
+          </mat-form-field>
+        </div>
+
+      </form>
+      }
+    </mat-card-content>
+
+    <mat-card-actions class="card-actions">
+      <button mat-button color="accent" type="button" (click)="onCancel()" [disabled]="isSaving">
+        <mat-icon>cancel</mat-icon>
+        Cancel
+      </button>
+      <button mat-raised-button color="primary" type="submit" [disabled]="!form || form.invalid || isSaving" (click)="onSubmit()">
+        <mat-spinner *ngIf="isSaving" diameter="20" class="button-spinner"></mat-spinner>
+        <mat-icon *ngIf="!isSaving">save</mat-icon>
+        {{ isSaving ? 'Saving...' : 'Save' }}
+      </button>
+    </mat-card-actions>
+  </mat-card>
+</div>

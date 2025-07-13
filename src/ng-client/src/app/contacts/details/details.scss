@@ -1,0 +1,364 @@
+:host {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  min-height: 100vh;
+  padding: 24px;
+  background-color: var(--mat-app-background-color);
+}
+
+.contact-details-container {
+  width: 100%;
+  max-width: 800px;
+}
+
+.contact-details-card {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  border-radius: 12px !important;
+  overflow: hidden;
+  background-color: var(--mat-card-container-color);
+
+  mat-card-header {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 24px 32px;
+
+    mat-card-title {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 24px;
+      font-weight: 600;
+      margin: 0;
+
+      mat-icon {
+        font-size: 28px;
+        width: 28px;
+        height: 28px;
+        color: rgba(255, 255, 255, 0.9);
+      }
+    }
+  }
+
+  mat-card-content {
+    padding: 32px;
+    background-color: var(--mat-card-container-color);
+    position: relative;
+  }
+}
+
+.contact-details-content {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+.details-section {
+  .section-title {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--mat-card-subtitle-text-color);
+    margin: 0 0 20px 0;
+    padding-bottom: 8px;
+    border-bottom: 2px solid var(--mat-divider-color);
+    
+    mat-icon {
+      color: #667eea;
+      font-size: 20px;
+      width: 20px;
+      height: 20px;
+    }
+  }
+}
+
+.details-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 20px;
+}
+
+.detail-item {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+
+  &.full-width {
+    grid-column: 1 / -1;
+  }
+
+  .detail-label {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--mat-form-field-label-text-color);
+    opacity: 0.8;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  .detail-value {
+    font-size: 16px;
+    color: var(--mat-card-subtitle-text-color);
+    font-weight: 400;
+    line-height: 1.5;
+    min-height: 24px;
+    display: flex;
+    align-items: center;
+
+    &.notes-value {
+      white-space: pre-wrap;
+      align-items: flex-start;
+      min-height: 60px;
+      padding: 12px;
+      background-color: var(--mat-form-field-container-color);
+      border-radius: 8px;
+      border: 1px solid var(--mat-divider-color);
+    }
+  }
+}
+
+.contact-link {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #667eea;
+  text-decoration: none;
+  transition: all 0.2s ease;
+
+  &:hover {
+    color: #5a6fd8;
+    text-decoration: underline;
+  }
+
+  mat-icon {
+    font-size: 18px;
+    width: 18px;
+    height: 18px;
+  }
+}
+
+.status-chips {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+
+  mat-chip-set {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .starred-chip {
+    background-color: #ffd700;
+    color: #333;
+
+    mat-icon {
+      color: #333;
+    }
+  }
+
+  .blocked-chip {
+    background-color: #f44336;
+    color: white;
+
+    mat-icon {
+      color: white;
+    }
+  }
+
+  .normal-chip {
+    background-color: #4caf50;
+    color: white;
+
+    mat-icon {
+      color: white;
+    }
+  }
+}
+
+.loading-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: var(--mat-dialog-container-color);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.no-contact {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  padding: 40px;
+  color: var(--mat-card-subtitle-text-color);
+  opacity: 0.6;
+
+  mat-icon {
+    font-size: 48px;
+    width: 48px;
+    height: 48px;
+  }
+
+  p {
+    margin: 0;
+    font-size: 18px;
+    font-weight: 500;
+  }
+}
+
+// 按钮区域
+.card-actions {
+  padding: 24px 32px;
+  background-color: var(--mat-card-actions-container-color);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-top: 1px solid var(--mat-divider-color);
+  
+  .action-buttons {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+  }
+  
+  button {
+    border-radius: 8px;
+    padding: 12px 24px;
+    font-weight: 600;
+    text-transform: none;
+    position: relative;
+    
+    &[mat-raised-button] {
+      box-shadow: 0 2px 8px rgba(102, 126, 234, 0.3);
+      
+      &:hover:not(:disabled) {
+        box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+        transform: translateY(-1px);
+      }
+    }
+    
+    &[mat-button] {
+      &:hover:not(:disabled) {
+        background-color: rgba(102, 126, 234, 0.1);
+      }
+
+      &.star-button {
+        &.starred {
+          color: #ffd700;
+        }
+      }
+
+      &.block-button {
+        &.blocked {
+          color: #f44336;
+        }
+      }
+    }
+    
+    mat-icon {
+      margin-right: 8px;
+    }
+  }
+}
+
+// 响应式设计
+@media (max-width: 768px) {
+  :host {
+    padding: 16px;
+    background-color: var(--mat-app-background-color);
+  }
+  
+  .contact-details-card {
+    mat-card-header {
+      padding: 20px;
+      
+      mat-card-title {
+        font-size: 20px;
+        
+        mat-icon {
+          font-size: 24px;
+          width: 24px;
+          height: 24px;
+        }
+      }
+    }
+    
+    mat-card-content {
+      padding: 24px 20px;
+      background-color: var(--mat-card-container-color);
+    }
+  }
+  
+  .contact-details-content {
+    gap: 24px;
+  }
+
+  .details-grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+  
+  .card-actions {
+    padding: 20px;
+    flex-direction: column;
+    gap: 16px;
+    background-color: var(--mat-card-actions-container-color);
+    border-top-color: var(--mat-divider-color);
+
+    .action-buttons {
+      width: 100%;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+    
+    button {
+      flex: 1;
+      min-width: 120px;
+    }
+  }
+}
+
+@media (max-width: 480px) {
+  :host {
+    padding: 12px;
+    background-color: var(--mat-app-background-color);
+  }
+  
+  .contact-details-card {
+    mat-card-header {
+      padding: 16px;
+    }
+    
+    mat-card-content {
+      padding: 20px 16px;
+      background-color: var(--mat-card-container-color);
+    }
+  }
+  
+  .card-actions {
+    padding: 16px;
+    background-color: var(--mat-card-actions-container-color);
+    border-top-color: var(--mat-divider-color);
+
+    .action-buttons {
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    button {
+      width: 100%;
+    }
+  }
+
+  .details-grid {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+}

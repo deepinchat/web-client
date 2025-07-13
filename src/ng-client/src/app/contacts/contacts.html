@@ -13,7 +13,7 @@
                 <mat-label>Search Contacts</mat-label>
                 <input matInput [formControl]="searchControl" />
                 @if(searchControl.value){
-                    <button mat-icon-button matSuffix>
+                    <button mat-icon-button matSuffix (click)="clearSearch()">
                         <mat-icon>close</mat-icon>
                     </button>
                 }
