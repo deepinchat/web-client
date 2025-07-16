@@ -1,0 +1,7 @@
+@if (profile) {
+@if(profile.pictureUrl){
+<deepin-avatar [fileUrl]="profile.pictureUrl" [displayName]="displayName" [size]="size" [shape]="shape"></deepin-avatar>
+}@else if(profile.pictureId){
+<deepin-avatar [fileUrl]="profile.pictureId | fileUrl | async" [displayName]="displayName" [size]="size" [shape]="shape"></deepin-avatar>
+}
+}

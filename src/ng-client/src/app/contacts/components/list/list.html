@@ -1,0 +1,29 @@
+@if (result.items && result.items.length > 0) {
+<mat-list class="thin-scrollbar">
+  @for (item of result.items; track item.id) {
+  <contact-list-item [contact]="item"></contact-list-item>
+  }
+</mat-list>
+}@else {
+<div class="empty-state">
+  <div class="empty-content">
+    @if (searchTerm) {
+    <mat-icon class="empty-icon">search_off</mat-icon>
+    <h4>No contacts found</h4>
+    <p>No contacts match your search criteria</p>
+    <button mat-button (click)="clearSearch()" class="clear-search-button">
+      <mat-icon>clear</mat-icon>
+      Clear Search
+    </button>
+    } @else {
+    <mat-icon class="empty-icon">person_add</mat-icon>
+    <h4>No contacts yet</h4>
+    <p>Add your first contact to get started</p>
+    <button mat-raised-button color="primary" (click)="onAddContact()" class="add-first-button">
+      <mat-icon>person_add</mat-icon>
+      Add Contact
+    </button>
+    }
+  </div>
+</div>
+}

@@ -1,0 +1,42 @@
+.profile-form {
+    display: flex;
+    flex-direction: column;
+}
+
+.profile-section {
+    display: flex;
+    flex-direction: column;
+    
+    .section-title {
+        margin: 0 0 0.5rem 0;
+        font-size: 0.875rem;
+        font-weight: 500;
+        opacity: 0.87;
+    }
+}
+
+.avatar-section {
+    align-items: center;
+    text-align: center;
+    
+    .avatar-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 1rem;
+        
+        .avatar-uploader {
+            margin-top: 0.5rem;
+        }
+    }
+}
+
+.fields-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    
+    @media (max-width: 768px) {
+        grid-template-columns: 1fr;
+    }
+}

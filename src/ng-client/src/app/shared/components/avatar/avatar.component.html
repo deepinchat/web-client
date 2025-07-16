@@ -1,0 +1,8 @@
+<div class="{{ 'avatar ' + size + ' ' + shape }}" [style.background-color]="backgroundColor">
+    @if(fileUrl){
+    <img [src]="fileUrl" alt="Avatar">
+    }
+    @else {
+    <span class="initials">{{ initials }}</span>
+    }
+</div>

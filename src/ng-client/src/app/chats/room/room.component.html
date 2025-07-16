@@ -1,0 +1,35 @@
+@if (chat) {
+<mat-toolbar>
+    <div class="chat-header-left">
+        <deepin-avatar [fileUrl]="chat.avatarFileId | fileUrl | async" [displayName]="chat.name" />
+        <span>{{ chat.name }}</span>
+    </div>
+    <div class="chat-header-right">
+        <button mat-icon-button>
+            <mat-icon>call</mat-icon>
+        </button>
+        <button mat-icon-button>
+            <mat-icon>video_call</mat-icon>
+        </button>
+        <button mat-icon-button [matMenuTriggerFor]="chatMenu">
+            <mat-icon>menu</mat-icon>
+        </button>
+        <mat-menu #chatMenu="matMenu" xPosition="before" yPosition="below">
+            <button mat-menu-item>
+                View Chat info
+            </button>
+            <button mat-menu-item (click)="editChat()">
+                Edit Chat
+            </button>
+            <button mat-menu-item>
+                Add Members
+            </button>
+            <button mat-menu-item>
+                Leave
+            </button>
+        </mat-menu>
+    </div>
+</mat-toolbar>
+<deepin-message-list [chatId]="chat.id"></deepin-message-list>
+<deepin-message-editor></deepin-message-editor>
+}

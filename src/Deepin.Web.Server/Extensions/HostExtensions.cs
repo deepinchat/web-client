@@ -1,6 +1,8 @@
-using System;
-using Microsoft.AspNetCore.Authentication.Cookies;
-using Microsoft.AspNetCore.Authentication.OpenIdConnect;
+using System.Text.Json;
+using Deepin.Internal.SDK.Extensions;
+using Deepin.Web.Server.Services;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.HttpOverrides;
 
 namespace Deepin.Web.Server.Extensions;
 
@@ -9,43 +11,47 @@ public static class HostExtensions
 
     public static WebApplicationBuilder AddApplicationService(this WebApplicationBuilder builder)
     {
+        builder.Services
+        .AddDefaultUserContexts()
+        .AddDefaultDataProtection(builder.Configuration.GetConnectionString("Redis"))
+        .AddDefaultAuthentication(builder.Configuration);
 
-        builder.Services.AddControllers();
-        // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
-        builder.Services.AddOpenApi();
-
-        var identitySection = builder.Configuration.GetSection("Identity");
-        builder.Services.AddAuthentication(options =>
+        builder.AddServiceDefaults();
+        builder.Services
+        .AddTransient<HttpClientAuthorizationDelegatingHandler>()
+        .AddDeepinApiClient(options =>
         {
-            options.DefaultAuthenticateScheme = CookieAuthenticationDefaults.AuthenticationScheme;
-            options.DefaultChallengeScheme = OpenIdConnectDefaults.AuthenticationScheme;
-            options.DefaultSignInScheme = CookieAuthenticationDefaults.AuthenticationScheme;
-        })
-        .AddCookie(CookieAuthenticationDefaults.AuthenticationScheme)
-        .AddOpenIdConnect(OpenIdConnectDefaults.AuthenticationScheme, options =>
-        {
-            options.Authority = identitySection["Url"];
-            options.ClientId = identitySection["ClientId"];
-            options.ClientSecret = identitySection["ClientSecret"];
-            options.ResponseType = "code";
-            options.SaveTokens = true;
-            options.Scope.Add("openid");
-            options.Scope.Add("profile");
-            var scopes = identitySection.GetRequiredSection("Scopes").Get<IDictionary<string, string>>();
-            if (scopes != null)
+            options.BaseUrl = builder.Configuration["DeepinApiUrl"] ?? throw new ArgumentNullException("DeepinApiUrl");
+            options.Timeout = TimeSpan.FromSeconds(30);
+            options.JsonSerializerOptions = new JsonSerializerOptions
             {
-                foreach (var scope in scopes)
+                PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
+                PropertyNameCaseInsensitive = true,
+                Converters =
                 {
-                    options.Scope.Add(scope.Key);
-                }
-            }
-            options.GetClaimsFromUserInfoEndpoint = true;
-        });
+                    new System.Text.Json.Serialization.JsonStringEnumConverter()
+                },
+                DefaultIgnoreCondition = System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingNull,
+                WriteIndented = true
+            };
+        }).AddHttpMessageHandler<HttpClientAuthorizationDelegatingHandler>();
+        builder.Services.AddScoped<IChatService, ChatService>();
+        builder.Services.AddScoped<IMessageService, MessageService>();
+        builder.Services.AddScoped<IUserService, UserService>();
+        builder.Services.AddScoped<IContactService, ContactService>();
+        builder.Services.AddReverseProxy()
+            .AddTransforms<AccessTokenTransformProvider>()
+            .LoadFromConfig(builder.Configuration.GetSection("ReverseProxy"));
         return builder;
     }
 
     public static WebApplication UseApplicationService(this WebApplication app)
     {
+
+        app.UseForwardedHeaders(new ForwardedHeadersOptions
+        {
+            ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto
+        });
         app.UseDefaultFiles();
         app.MapStaticAssets();
 
@@ -55,13 +61,30 @@ public static class HostExtensions
             app.MapOpenApi();
         }
 
+        var pathBase = app.Configuration["PathBase"];
+
+        if (!string.IsNullOrEmpty(pathBase))
+        {
+            app.UsePathBase(pathBase);
+        }
         app.UseHttpsRedirection();
         app.UseAuthentication();
         app.UseAuthorization();
 
-        app.MapControllers();
+        app.UseDefaultOpenApi(app.Configuration);
 
+        app.MapDefaultHealthChecks();
+
+        app.MapControllers();
+        app.MapGet("/api/about", () => new
+        {
+            Name = "Deepin.Web.API",
+            Version = "1.0.0",
+            DeepinEnv = app.Configuration["DEEPIN_ENV"],
+            app.Environment.EnvironmentName
+        });
         app.MapFallbackToFile("/index.html").RequireAuthorization();
+        app.MapReverseProxy();
         return app;
     }
 }

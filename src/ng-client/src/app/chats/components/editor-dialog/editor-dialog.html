@@ -1,0 +1,20 @@
+<div class="dialog-header">
+    <h2 mat-dialog-title>Edit Chat</h2>
+</div>
+<mat-dialog-content class="dialog-content">
+    <chat-editor #chatEditor></chat-editor>
+</mat-dialog-content>
+<mat-dialog-actions class="dialog-actions">
+    <button type="button" [disabled]="chatEditor.isLoading" mat-button (click)="onCancel()">
+        Cancel
+    </button>
+    <button type="button" [disabled]="chatEditor.isLoading || chatEditor.form?.invalid" mat-flat-button color="primary"
+        (click)="onSubmit()">
+        @if (chatEditor.isLoading) {
+        <mat-icon>
+            <mat-spinner diameter="16"></mat-spinner>
+        </mat-icon>
+        }
+        Save
+    </button>
+</mat-dialog-actions>

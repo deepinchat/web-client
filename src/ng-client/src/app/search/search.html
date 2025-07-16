@@ -1,0 +1,128 @@
+<div class="search-box">
+    <mat-form-field appearance="outline" class="search-input">
+        <mat-label>
+            Search users, chats, messages, and bots
+        </mat-label>
+        <input matInput [formControl]="searchControl" placeholder="Keywords">
+        <mat-icon matSuffix>search</mat-icon>
+    </mat-form-field>
+</div>
+@if(hasSearched){
+<div class="search-results">
+    <div class="loading-container" *ngIf="isLoading">
+        <mat-spinner diameter="40"></mat-spinner>
+        <p>Searching...</p>
+    </div>
+    @if(isLoading === false){
+    <mat-tab-group class="search-tabs">
+        <mat-tab [label]="'Users (' + userResults.totalCount + ')'">
+            <div class="tab-content">
+                <mat-list *ngIf="userResults.items.length > 0">
+                    <mat-list-item *ngFor="let user of userResults.items" (click)="onUserClick(user)"
+                        class="clickable-item">
+                        @if(user.pictureId){
+                        <img matListItemAvatar [src]="user.pictureId | fileUrl | async" />
+                        }@else {
+                        <mat-icon matListItemAvatar>
+                            person
+                        </mat-icon>
+                        }
+                        <div matListItemTitle>
+                            @if(user.userName){
+                            {{user.userName}}
+                            }
+                        </div>
+                        <div matListItemLine>
+                            {{ user.email }}
+                        </div>
+                    </mat-list-item>
+                </mat-list>
+                <div class="no-results" *ngIf="userResults.items.length === 0">
+                    <mat-icon>person_off</mat-icon>
+                    <p>
+                        No users found matching your search criteria.
+                    </p>
+                </div>
+            </div>
+        </mat-tab>
+
+        <mat-tab [label]="'Chats (' + chatsCount + ')'">
+            <div class="tab-content">
+                <mat-list *ngIf="chats.length > 0">
+                    <mat-list-item *ngFor="let chat of chats" (click)="onChatClick(chat)" class="clickable-item">
+                        <deepin-avatar matListItemAvatar [displayName]="chat.name" [fileUrl]="chat.avatarFileId | fileUrl | async"
+                            size="md"></deepin-avatar>
+                        <div matListItemTitle>{{ chat.name }}</div>
+                        <div matListItemLine>{{ chat.description }}</div>
+                    </mat-list-item>
+                </mat-list>
+                <div class="no-results" *ngIf="chats.length === 0">
+                    <mat-icon>chat_bubble_outline</mat-icon>
+                    <p>
+                        No chats found matching your search criteria.
+                    </p>
+                </div>
+            </div>
+        </mat-tab>
+
+        <mat-tab [label]="'Messages (' + messagesCount + ')'">
+            <div class="tab-content">
+                <div *ngIf="messages.length > 0" class="messages-container">
+                    <mat-card *ngFor="let message of messages" class="message-card clickable-item"
+                        (click)="onMessageClick(message)">
+                        <mat-card-content>
+                            <div class="message-header">
+                                <user-avatar [profile]="message.sender" size="md"></user-avatar>
+                                <div class="message-info">
+                                    <span class="sender-name">{{ message.sender.name || message.sender.userName
+                                        }}</span>
+                                    <span class="message-time">{{ message.createdAt | date:'short' }}</span>
+                                </div>
+                            </div>
+                            <div class="message-content">
+                                {{ message.content }}
+                            </div>
+                        </mat-card-content>
+                    </mat-card>
+                </div>
+                <div class="no-results" *ngIf="messages.length === 0">
+                    <mat-icon>message</mat-icon>
+                    <p>
+                        No messages found matching your search criteria.
+                    </p>
+                </div>
+            </div>
+        </mat-tab>
+
+        <mat-tab [label]="'Bots (' + botsCount + ')'">
+            <div class="tab-content">
+                <mat-list *ngIf="bots.length > 0">
+                    <mat-list-item *ngFor="let bot of bots" (click)="onBotClick(bot)" class="clickable-item">
+                        <user-avatar matListItemAvatar [profile]="bot" size="md"></user-avatar>
+                        <div matListItemTitle>{{ bot.name || bot.userName }}</div>
+                        <div matListItemLine>{{ bot.bio }}</div>
+                        <mat-icon matListItemIcon>smart_toy</mat-icon>
+                    </mat-list-item>
+                </mat-list>
+                <div class="no-results" *ngIf="bots.length === 0">
+                    <mat-icon>smart_toy</mat-icon>
+                    <p>
+                        No bots found matching your search criteria.
+                        You can add bots to your chats to enhance functionality.
+                        <a mat-button routerLink="/bots">Explore Bots</a>
+                    </p>
+                </div>
+            </div>
+        </mat-tab>
+    </mat-tab-group>
+    }
+</div>
+}
+@else {
+<div class="empty-state">
+    <mat-icon class="empty-icon">search</mat-icon>
+    <p>
+        Start typing to search for users, chats, messages, and bots.
+    </p>
+</div>
+}

@@ -1,0 +1,6 @@
+
+<mat-list class="thin-scrollbar">
+    @for (chat of chats; track $index) {
+    <chat-list-item [isActive]="openedChatId === chat.chat.id" [item]="chat" (click)="onChat(chat)"></chat-list-item>
+    }
+</mat-list>

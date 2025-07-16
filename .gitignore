@@ -361,4 +361,5 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
-src/Deepin.Web.Server/wwwroot
+src/Deepin.Web.Server/wwwroot/**
+.DS_Store

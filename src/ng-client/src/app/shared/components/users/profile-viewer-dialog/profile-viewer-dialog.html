@@ -1,0 +1,41 @@
+<div class="dialog-header">
+    <h2 mat-dialog-title>Profile</h2>
+</div>
+<mat-dialog-content class="dialog-content">
+    <profile-viewer [profile]="profile"></profile-viewer>
+</mat-dialog-content>
+<mat-dialog-actions class="dialog-actions">
+    <button type="button" 
+            [disabled]="isLoading" 
+            mat-button 
+            (click)="onClose()">
+        Close
+    </button>
+    @if(!isMyself) {
+    <button type="button" 
+            [disabled]="isLoading" 
+            mat-flat-button
+            color="primary"
+            (click)="onEdit()">
+        @if (isLoading) {
+        <mat-icon>
+            <mat-spinner diameter="16"></mat-spinner>
+        </mat-icon>
+        }
+        Edit Profile
+    </button>
+    } @else {
+    <button type="button" 
+            [disabled]="isLoading" 
+            mat-flat-button
+            color="primary"
+            (click)="onAdd()">
+        @if (isLoading) {
+        <mat-icon>
+            <mat-spinner diameter="16"></mat-spinner>
+        </mat-icon>
+        }
+        Save to Contacts
+    </button>
+    }
+</mat-dialog-actions>

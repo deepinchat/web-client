@@ -1,0 +1,28 @@
+<div class="contact-list-container">
+    <mat-toolbar>
+        <mat-toolbar-row>
+            <span>Contacts</span>
+            <span class="item-spacer"></span>
+            <button mat-icon-button [routerLink]="['new']" aria-label="Add Contact">
+                <mat-icon>add</mat-icon>
+            </button>
+        </mat-toolbar-row>
+        <mat-toolbar-row>
+            <span class="item-spacer"></span>
+            <mat-form-field appearance="fill" class="search-field">
+                <mat-label>Search Contacts</mat-label>
+                <input matInput [formControl]="searchControl" />
+                @if(searchControl.value){
+                    <button mat-icon-button matSuffix (click)="clearSearch()">
+                        <mat-icon>close</mat-icon>
+                    </button>
+                }
+            </mat-form-field>
+        </mat-toolbar-row>
+
+    </mat-toolbar>
+    <contact-list class="thin-scrollbar"></contact-list>
+</div>
+<div class="contact-container">
+    <router-outlet></router-outlet>
+</div>

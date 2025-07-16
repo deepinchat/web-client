@@ -1,0 +1,84 @@
+@if (profile && form) {
+<form [formGroup]="form" class="profile-form">
+    <!-- Profile Picture Section -->
+    <div class="profile-section avatar-section">
+        <div class="avatar-container">
+            <user-avatar [size]="'xl'" [profile]="profile"></user-avatar>
+            <deepin-file-uploader 
+                (fileUploaded)="onAvatarUploaded($event)" 
+                [multiple]="false"
+                [accept]="'image/*'"
+                class="avatar-uploader">
+            </deepin-file-uploader>
+        </div>
+    </div>
+
+    <!-- Basic Information Section -->
+    <div class="profile-section">
+        <h3 class="section-title">Basic Information</h3>
+        <div class="fields-row">
+            <mat-form-field appearance="outline">
+                <mat-label>First Name</mat-label>
+                <input matInput formControlName="firstName">
+            </mat-form-field>
+            <mat-form-field appearance="outline">
+                <mat-label>Last Name</mat-label>
+                <input matInput formControlName="lastName">
+            </mat-form-field>
+        </div>
+        <mat-form-field appearance="outline">
+            <mat-label>Display Name</mat-label>
+            <input matInput formControlName="name">
+            @if (formControlErrors('name')?.['required']) {
+            <mat-error>Display Name cannot be null.</mat-error>
+            }
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+            <mat-label>Birth Date</mat-label>
+            <input matInput [matDatepicker]="picker" formControlName="birthDate">
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+            <mat-label>Company</mat-label>
+            <input matInput formControlName="company" placeholder="Enter Company Name">
+        </mat-form-field>
+    </div>
+
+    <!-- Location & Preferences Section -->
+    <div class="profile-section">
+        <h3 class="section-title">Location & Preferences</h3>
+        <mat-form-field appearance="outline">
+            <mat-label>Location</mat-label>
+            <input matInput formControlName="location">
+        </mat-form-field>
+        <div class="fields-row">
+            <mat-form-field appearance="outline">
+                <mat-label>Time Zone</mat-label>
+                <mat-select formControlName="zoneInfo">
+                    @for (timeZone of timeZones; track timeZone) {
+                    <mat-option [value]="timeZone.value">{{timeZone.name}}</mat-option>
+                    }
+                </mat-select>
+            </mat-form-field>
+            <mat-form-field appearance="outline">
+                <mat-label>Language</mat-label>
+                <mat-select formControlName="locale">
+                    @for (locale of locales; track locale) {
+                    <mat-option [value]="locale.value">{{locale.name}}</mat-option>
+                    }
+                </mat-select>
+            </mat-form-field>
+        </div>
+    </div>
+
+    <!-- About Section -->
+    <div class="profile-section">
+        <h3 class="section-title">About</h3>
+        <mat-form-field appearance="outline">
+            <mat-label>Bio / Description</mat-label>
+            <textarea matInput formControlName="bio" rows="4" placeholder="Tell others about yourself..."></textarea>
+        </mat-form-field>
+    </div>
+</form>
+}

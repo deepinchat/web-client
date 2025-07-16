@@ -1,0 +1,35 @@
+@if (message) {
+<div class="message" [class.message-my]="isMyMessage" [class.message-other]="!isMyMessage">
+    <user-avatar [profile]="message.sender"></user-avatar>
+    <div class="message-container">
+        <div class="message-sender">
+            <span>
+                {{ message.sender.name }}
+            </span>
+            <small>
+                {{ message.createdAt | formatTime }}
+            </small>
+        </div>
+        <div class="message-content">
+            @if(message.content) {
+            <div class="message-text">
+                {{ message.content }}
+                @if(message.isEdited){
+                <span class="edited-indicator">(Edited)</span>
+                }
+            </div>
+            }
+            @if (message.attachments) {
+            <div class="message-medias">
+                @if(medias) {
+                @for(item of medias; track $index){
+                <deepin-message-attachment class="message-media" [attachment]="item"></deepin-message-attachment>
+                }
+                }
+            </div>
+            }
+        </div>
+
+    </div>
+</div>
+}

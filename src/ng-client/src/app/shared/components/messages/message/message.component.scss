@@ -1,0 +1,73 @@
+.message {
+    display: flex;
+    position: relative;
+    margin: .5rem;
+    gap: .5rem;
+
+    &:hover .message-actions {
+        opacity: 1;
+    }
+
+    &-container {
+        flex: auto;
+        // display: flex;
+        // flex-direction: column;
+        // gap: .25rem;
+    }
+
+    &-content {
+        padding: .5rem .75rem;
+        box-shadow: var(--mat-sys-level0);
+        position: relative;
+        word-break: break-word;
+    }
+
+    &-sender {
+        color: var(--mat-sys-secondary);
+        display: flex;
+        justify-content: start;
+        align-items: center;
+        gap: 1rem;
+    }
+
+    &-text {
+        line-height: 1.5;
+    }
+
+    &-my {
+        justify-content: flex-start;
+        flex-direction: row-reverse;
+
+        .message-sender {
+            flex-direction: row-reverse;
+            justify-content: end;
+        }
+
+        .message-content {
+            color: var(--mat-sys-on-surface);
+            // background-color: var(--mat-sys-primary-container);
+            border-radius: 1rem 0 1rem 1rem;
+        }
+    }
+
+    &-other {
+        justify-content: flex-start;
+
+        .message-content {
+            border-radius: 0 1rem 1rem 1rem;
+            // background-color: var(--mat-sys-surface-container-high)
+        }
+    }
+
+    &-medias {
+        display: flex;
+        flex-flow: wrap;
+        gap: .5rem;
+    }
+
+    &-media {
+        display: flex;
+        flex-direction: column;
+        max-width: calc(25% - .5rem);
+    }
+}
