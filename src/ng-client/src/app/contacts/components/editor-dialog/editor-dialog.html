@@ -1,0 +1,34 @@
+<div>
+    <h2 mat-dialog-title>Edit Contact</h2>
+</div>
+<mat-dialog-content>
+    @if(form){
+    <form [formGroup]="form" class="contact-editor-form">
+        <div class="fields-row">
+            <mat-form-field appearance="outline">
+                <mat-label>Name</mat-label>
+                <input matInput formControlName="name">
+            </mat-form-field>
+        </div>
+        <div class="fields-row">
+            <mat-form-field appearance="outline">
+                <mat-label>Notes</mat-label>
+                <textarea matInput formControlName="notes" rows="3" placeholder="Add notes..."></textarea>
+            </mat-form-field>
+        </div>
+    </form>
+    }
+</mat-dialog-content>
+<mat-dialog-actions>
+    <button type="button" [disabled]="isLoading" mat-button (click)="onCancel()">
+        Cancel
+    </button>
+    <button type="button" [disabled]="isLoading || form?.invalid" mat-flat-button color="primary" (click)="onSubmit()">
+        @if (isLoading) {
+        <mat-icon>
+            <mat-spinner diameter="16"></mat-spinner>
+        </mat-icon>
+        }
+        Save
+    </button>
+</mat-dialog-actions>

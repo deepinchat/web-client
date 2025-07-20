@@ -1,6 +1,6 @@
 import { Component, ViewChild, AfterViewInit } from '@angular/core';
 import { ContactList } from './components/list/list';
-import { RouterLink, RouterOutlet } from '@angular/router';
+import { RouterOutlet } from '@angular/router';
 import { MatToolbar, MatToolbarRow } from '@angular/material/toolbar';
 import { MatIcon } from '@angular/material/icon';
 import { MatIconButton } from '@angular/material/button';
@@ -8,6 +8,8 @@ import { MatInputModule, MatLabel } from "@angular/material/input";
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { debounceTime, distinctUntilChanged } from 'rxjs';
+import { MatDialog } from '@angular/material/dialog';
+import { AddContactDialog } from './components/add-dialog/add-dialog';
 
 @Component({
   selector: 'contacts',
@@ -15,7 +17,6 @@ import { debounceTime, distinctUntilChanged } from 'rxjs';
   styleUrl: './contacts.scss',
   imports: [
     RouterOutlet,
-    RouterLink,
     ReactiveFormsModule,
     MatToolbar,
     MatToolbarRow,
@@ -30,6 +31,11 @@ import { debounceTime, distinctUntilChanged } from 'rxjs';
 export class Contacts implements AfterViewInit {
   @ViewChild(ContactList) contactList!: ContactList;
   searchControl = new FormControl('');
+  constructor(
+    private dialog: MatDialog
+  ) {
+
+  }
 
   ngAfterViewInit() {
     this.searchControl.valueChanges.pipe(
@@ -44,5 +50,13 @@ export class Contacts implements AfterViewInit {
 
   clearSearch() {
     this.searchControl.setValue('');
+  }
+
+  addContact() {
+    this.dialog.open(AddContactDialog, {
+      width: '400px',
+      disableClose: true,
+      autoFocus: false
+    });
   }
 }

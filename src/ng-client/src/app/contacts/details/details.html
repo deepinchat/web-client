@@ -23,17 +23,17 @@
         
         <div class="detail-item">
           <label class="detail-label">First Name</label>
-          <div class="detail-value">{{ contact.firstName || 'Not provided' }}</div>
+          <div class="detail-value">{{ contact.profile.firstName }}</div>
         </div>
         
         <div class="detail-item">
           <label class="detail-label">Last Name</label>
-          <div class="detail-value">{{ contact.lastName || 'Not provided' }}</div>
+          <div class="detail-value">{{ contact.profile.lastName }}</div>
         </div>
         
         <div class="detail-item">
           <label class="detail-label">Company</label>
-          <div class="detail-value">{{ contact.company || 'Not provided' }}</div>
+          <div class="detail-value">{{ contact.profile.company }}</div>
         </div>
       </div>
     </div>
@@ -49,10 +49,10 @@
         <div class="detail-item">
           <label class="detail-label">Email</label>
           <div class="detail-value">
-            @if (contact.email) {
-            <a [href]="'mailto:' + contact.email" class="contact-link">
+            @if (contact.profile.email) {
+            <a [href]="'mailto:' + contact.profile.email" class="contact-link">
               <mat-icon>email</mat-icon>
-              {{ contact.email }}
+              {{ contact.profile.email }}
             </a>
             } @else {
             <span>Not provided</span>
@@ -63,10 +63,10 @@
         <div class="detail-item">
           <label class="detail-label">Phone Number</label>
           <div class="detail-value">
-            @if (contact.phoneNumber) {
-            <a [href]="'tel:' + contact.phoneNumber" class="contact-link">
+            @if (contact.profile.phoneNumber) {
+            <a [href]="'tel:' + contact.profile.phoneNumber" class="contact-link">
               <mat-icon>phone</mat-icon>
-              {{ contact.phoneNumber }}
+              {{ contact.profile.phoneNumber }}
             </a>
             } @else {
             <span>Not provided</span>
@@ -75,8 +75,8 @@
         </div>
         
         <div class="detail-item">
-          <label class="detail-label">Address</label>
-          <div class="detail-value">{{ contact.address || 'Not provided' }}</div>
+          <label class="detail-label">Location</label>
+          <div class="detail-value">{{ contact.profile.location }}</div>
         </div>
       </div>
     </div>

@@ -7,14 +7,6 @@ export default [
         component: Contacts,
         children: [
             {
-                path: 'new',
-                loadComponent: () => import('./edit/edit').then(m => m.ContactEdit)
-            },
-            {
-                path: ':id/edit',
-                loadComponent: () => import('./edit/edit').then(m => m.ContactEdit)
-            },
-            {
                 path: ':id',
                 loadComponent: () => import('./details/details').then(m => m.ContactDetails)
             }

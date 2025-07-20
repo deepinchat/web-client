@@ -1,0 +1,28 @@
+<div>
+    <h2 mat-dialog-title>Add Contacts</h2>
+</div>
+<mat-dialog-content>
+    <div class="fields-row">
+        <mat-form-field appearance="outline">
+            <mat-label>
+                Username/Email/Phone
+            </mat-label>
+            <input matInput [formControl]="identityControl" placeholder="Add by username, email, or phone number">
+        </mat-form-field>
+    </div>
+    <form-errors></form-errors>
+</mat-dialog-content>
+<mat-dialog-actions>
+    <button type="button" [disabled]="isLoading" mat-button (click)="onCancel()">
+        Cancel
+    </button>
+    <button type="button" [disabled]="isLoading || identityControl.invalid" mat-flat-button color="primary"
+        (click)="onSubmit()">
+        @if (isLoading) {
+        <mat-icon>
+            <mat-spinner diameter="16"></mat-spinner>
+        </mat-icon>
+        }
+        Add
+    </button>
+</mat-dialog-actions>

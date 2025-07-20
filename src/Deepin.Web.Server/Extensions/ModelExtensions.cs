@@ -166,24 +166,17 @@ public static class ModelExtensions
             }) ?? []
         };
     }
-    public static ContactModel ToModel(this ContactDto contact, UserProfile? profile = null)
+    public static ContactModel ToModel(this ContactDto contact, UserProfile profile)
     {
         return new ContactModel
         {
             Id = contact.Id,
-            Name = contact.Name,
-            FirstName = contact.FirstName,
-            LastName = contact.LastName,
-            Company = contact.Company,
-            Birthday = contact.Birthday,
-            Email = contact.Email,
-            PhoneNumber = contact.PhoneNumber,
+            Name = contact.Name ?? profile.Name ?? "Unknown",
+            Notes = contact.Notes,
             CreatedAt = contact.CreatedAt,
             UpdatedAt = contact.UpdatedAt,
             IsBlocked = contact.IsBlocked,
             IsStarred = contact.IsStarred,
-            Address = contact.Address,
-            Notes = contact.Notes,
             CreatedBy = contact.CreatedBy,
             Profile = profile
         };

@@ -9,6 +9,8 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatChipsModule } from '@angular/material/chips';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatDialog } from '@angular/material/dialog';
+import { ContactEditorDialog } from '../components/editor-dialog/editor-dialog';
 
 @Component({
   selector: 'contact-details',
@@ -32,8 +34,9 @@ export class ContactDetails implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private router: Router,
-    private contactService: ContactService,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    private dialog: MatDialog,
+    private contactService: ContactService
   ) {
     this.id = this.route.snapshot.params['id'];
     this.route.params.subscribe(params => {
@@ -72,12 +75,6 @@ export class ContactDetails implements OnInit {
     });
   }
 
-  onEdit() {
-    if (this.contact) {
-      this.router.navigate(['/contacts', this.contact.id, 'edit']);
-    }
-  }
-
   onBack() {
     this.router.navigate(['/contacts']);
   }
@@ -112,5 +109,20 @@ export class ContactDetails implements OnInit {
   formatBirthday(birthday: string): string {
     if (!birthday) return '';
     return new Date(birthday).toLocaleDateString();
+  }
+
+  onEdit() {
+    this.dialog.open(ContactEditorDialog, {
+      width: '400px',
+      data: { contact: this.contact }
+    }).afterClosed().subscribe(result => {
+      if (result) {
+        this.contact = result;
+        this.snackBar.open('Contact updated successfully!', 'Close', {
+          duration: 3000,
+          panelClass: ['success-snackbar']
+        });
+      }
+    });
   }
 }

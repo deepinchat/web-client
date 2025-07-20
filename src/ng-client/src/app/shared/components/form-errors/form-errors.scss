@@ -1,0 +1,19 @@
+.form-errors {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    color: var(--mat-sys-error);
+
+    .error-message {
+        font-size: 0.875rem;
+        line-height: 1.25rem;
+    }
+
+    .validation-errors {
+        display: flex;
+        flex-direction: column;
+        gap: 0.25rem;
+        font-size: 0.875rem;
+        color: var(--mat-sys-error);
+    }
+}

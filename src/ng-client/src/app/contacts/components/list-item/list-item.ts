@@ -26,8 +26,7 @@ import { SubStringPipe } from '../../../shared/pipes/sub-string.pipe';
     MatTooltipModule,
     FileUrlPipe,
     AsyncPipe,
-    AvatarComponent,
-    SubStringPipe
+    AvatarComponent
   ],
   templateUrl: './list-item.html',
   styleUrl: './list-item.scss'
@@ -35,42 +34,32 @@ import { SubStringPipe } from '../../../shared/pipes/sub-string.pipe';
 export class ContactListItem {
   @Input() contact?: ContactModel;
 
-  getDisplayName(): string {
-    if (!this.contact) return '';
-    
-    if (this.contact.firstName && this.contact.lastName) {
-      return `${this.contact.firstName} ${this.contact.lastName}`;
-    }
-    
-    return this.contact.name || 'Unknown Contact';
-  }
-
   getSubtitle(): string {
     if (!this.contact) return '';
-    
+
     const parts = [];
-    if (this.contact.company) parts.push(this.contact.company);
-    if (this.contact.email) parts.push(this.contact.email);
-    
+    if (this.contact.profile.company) parts.push(this.contact.profile.company);
+    if (this.contact.profile.email) parts.push(this.contact.profile.email);
+
     return parts.join(' • ') || 'No additional information';
   }
 
   getInitials(): string {
     if (!this.contact) return '?';
-    
-    const name = this.getDisplayName();
+
+    const name = this.contact.name || '';
     const nameParts = name.trim().split(' ');
-    
+
     if (nameParts.length >= 2) {
       return (nameParts[0][0] + nameParts[nameParts.length - 1][0]).toUpperCase();
     } else if (nameParts.length === 1 && nameParts[0]) {
       return nameParts[0][0].toUpperCase();
     }
-    
+
     return '?';
   }
 
   hasContactInfo(): boolean {
-    return !!(this.contact?.email || this.contact?.phoneNumber);
+    return !!(this.contact?.profile.email || this.contact?.profile.phoneNumber);
   }
 }

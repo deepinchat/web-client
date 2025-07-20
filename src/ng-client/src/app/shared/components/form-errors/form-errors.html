@@ -1,0 +1,17 @@
+@if(errors){
+<div class="form-errors">
+    @if(errors.message){
+    <div class="error-message">{{errors.message}}</div>
+    }
+    @if(errors.hasValidationErrors && errors.validationErrors){
+    <div class="validation-errors">
+        <p>There are validation errors in your form:</p>
+        <ul>
+            @for(error of errors.validationErrors; track error) {
+            <li>{{error.propertyName}}: {{error.errors.join(', ')}}</li>
+            }
+        </ul>
+    </div>
+    }
+</div>
+}

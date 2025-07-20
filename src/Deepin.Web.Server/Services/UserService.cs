@@ -1,5 +1,6 @@
 using Deepin.Internal.SDK.Clients;
 using Deepin.Internal.SDK.Models;
+using Deepin.Web.Server.Exceptions;
 using Deepin.Web.Server.Extensions;
 using Deepin.Web.Server.Models;
 
@@ -8,9 +9,10 @@ namespace Deepin.Web.Server.Services;
 public interface IUserService
 {
     Task<UserProfile?> GetProfileAsync(Guid userId, CancellationToken cancellationToken = default);
-    Task<IEnumerable<UserProfile>?> BatchGetProfilesAsync(IEnumerable<Guid> userIds, CancellationToken cancellationToken = default);
     Task<UserProfile?> UpdateProfileAsync(Guid userId, UserProfileRequest request, CancellationToken cancellationToken = default);
+    Task<IEnumerable<UserProfile>?> BatchGetUsersAsync(IEnumerable<Guid> userIds, CancellationToken cancellationToken = default);
     Task<IPagedResult<UserProfile>> SearchUsersAsync(SearchUsersRequest request, CancellationToken cancellationToken = default);
+    Task<UserProfile?> GetUserByIdentityAsync(string identity, CancellationToken cancellationToken = default);
 }
 
 public class UserService(IDeepinApiClient deepinApiClient) : IUserService
@@ -56,7 +58,7 @@ public class UserService(IDeepinApiClient deepinApiClient) : IUserService
         return new PagedResult<UserProfile>(items, request.Offset, request.Limit, users.TotalCount);
     }
 
-    public async Task<IEnumerable<UserProfile>?> BatchGetProfilesAsync(IEnumerable<Guid> userIds, CancellationToken cancellationToken = default)
+    public async Task<IEnumerable<UserProfile>?> BatchGetUsersAsync(IEnumerable<Guid> userIds, CancellationToken cancellationToken = default)
     {
         if (userIds == null || !userIds.Any())
         {
@@ -72,5 +74,32 @@ public class UserService(IDeepinApiClient deepinApiClient) : IUserService
             return [];
         }
         return users.Select(u => u.ToModel());
+    }
+
+    public async Task<UserProfile?> GetUserByIdentityAsync(string identity, CancellationToken cancellationToken = default)
+    {
+        if (string.IsNullOrWhiteSpace(identity))
+        {
+            throw new InvalidInputException("User identity cannot be null or empty.");
+        }
+
+        try
+        {
+            var user = await deepinApiClient.Users.GetUserByIdentityAsync(identity, cancellationToken);
+            if (user == null)
+            {
+                return null;
+            }
+            return user.ToModel();
+        }
+        catch (HttpRequestException ex) when (ex.StatusCode == System.Net.HttpStatusCode.NotFound)
+        {
+            // Handle case where user identity does not exist
+            return null;
+        }
+        catch
+        {
+            throw;
+        }
     }
 }

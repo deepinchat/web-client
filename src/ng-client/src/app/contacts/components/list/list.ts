@@ -53,24 +53,27 @@ export class ContactList implements OnInit {
     private contactService: ContactService,
     private router: Router
   ) {
-    // 搜索防抖处理
     this.searchSubject.pipe(
       debounceTime(300),
       distinctUntilChanged()
     ).subscribe(searchTerm => {
       this.query.search = searchTerm;
-      this.query.offset = 0; // 重置到第一页
+      this.query.offset = 0;
       this.loadContacts();
     });
+
   }
 
   ngOnInit() {
     this.loadContacts();
+    this.contactService.contactChanged$.subscribe(() => {
+      this.loadContacts();
+    });
   }
 
   loadContacts() {
     this.isLoading = true;
-    this.contactService.getPaged(this.query).subscribe({
+    this.contactService.getPagedList(this.query).subscribe({
       next: (result) => {
         this.result = result;
       },
